@@ -12,13 +12,16 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     player.cpp \
-    spaceship.cpp
+    spaceship.cpp \
+    vettore.cpp
 
 HEADERS += \
     bullet.h \
     mainwindow.h \
     player.h \
-    spaceship.h
+    spaceship.h \
+    enemy.h \
+    vettore.h
 
 FORMS += \
     mainwindow.ui

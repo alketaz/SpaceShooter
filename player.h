@@ -3,10 +3,10 @@
 #include "spaceship.h"
 class player: public spaceship{
 private:
-    static double maxHp;
     unsigned int maxSpecial;
-    unsigned int special;
-    unsigned int maxLives;
+    static unsigned int maxLives;
+    double lifeLeft;
+    unsigned int specialLeft;
     unsigned int livesLeft;
 public:
     player(double, const bullet*, unsigned int);
@@ -14,6 +14,9 @@ public:
     void changeGun(const bullet*);
     void useSpecial();
     void addSpecial();
+    unsigned int getSpecial() const;
+    unsigned int getLives()const;
+    double getLife() const;
 };
 
 #endif // PLAYER_H

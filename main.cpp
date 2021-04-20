@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 
 #include <QApplication>
-
+#include "vettore.h"
+#include "player.h"
 
 int main(int argc, char *argv[])
 {

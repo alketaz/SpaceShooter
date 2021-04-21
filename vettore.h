@@ -44,7 +44,7 @@ public:
     iterator end();
     const_iterator end() const;
     void push_back(const T&);
-    void pop_back(const T&);
+    void pop_back();
     void erase(iterator);
     void erase(iterator, iterator);
 };

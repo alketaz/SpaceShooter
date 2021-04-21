@@ -1,3 +1,4 @@
+#include <iostream>
 #include "vettore.h"
 
 template<class T>
@@ -53,12 +54,23 @@ typename vettore<T>::const_iterator vettore<T>::end() const {return info[sze];}
 
 template<class T>
 void vettore<T>::push_back(const T& t){
-    if(sze>=cap){
+    if(sze==cap){
         cap*=2;
-        T* aux = new T(info);
+        T* aux = new T[cap];
+        for(int i=0;i<sze; i++)
+            aux[i]=info[i];
         delete[] info;
-        info(new T(aux));
+        info = aux;
     }
-    info[sze+1]=t;
+    info[sze]=t;
     ++sze;
 }
+
+template<class T>
+void vettore<T>::pop_back(){
+    if(sze==0){
+        throw std::exception("vettore vuoto ");
+    }
+    else
+}
+

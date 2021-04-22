@@ -4,19 +4,21 @@
 
 class spaceship{
 private:
-    double hp;
-    bullet* bult;
+    double maxHP;
+    double hpLeft;
+    const bullet* bult;
+    static double hpRecovery;
 public:
     spaceship(double =100, const bullet* =new bullet());
-
     spaceship(const spaceship&);
-
     virtual ~spaceship() =0;
-
+    //metodi
+    void heal();
     void decreaseHP(const bullet*);
-
+    double getMaxHP() const;
+    double getHP() const;
+    const bullet* getBull() const;
+    void changeGun(const bullet*);
 };
-
-/*spaceship::~spaceship() =default;*/
 
 #endif // SPACESHIP_H

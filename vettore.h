@@ -16,8 +16,6 @@ public:
     vettore(int, int =0);
     vettore(const vettore&);
     ~vettore();
-    int size() const;
-    int capacity() const;
 
     class iterator{
     private:
@@ -27,6 +25,12 @@ public:
     public:
         iterator();
         iterator(T*, bool =false);
+        iterator operator++(int);
+        iterator& operator++();
+        iterator operator--(int);
+        iterator& operator--();
+        bool operator==(const iterator&) const; //missing
+        bool operator!=(const iterator&) const; //missing
     };
     class const_iterator{
     private:
@@ -37,16 +41,26 @@ public:
         const_iterator();
         const_iterator(const iterator&);
         const_iterator(const T*, bool =false);
+        const_iterator operator++(int);
+        const_iterator& operator++();
+        const_iterator operator--(int);
+        const_iterator& operator--();
+        bool operator==(const const_iterator&) const; //missing
+        bool operator!=(const const_iterator&) const; //missing
     };
 
+
+    int size() const;
+    int capacity() const;
     iterator begin();
     const_iterator begin() const;
     iterator end();
     const_iterator end() const;
     void push_back(const T&);
     void pop_back();
-    void erase(iterator);
+    void erase(int);
     void erase(iterator, iterator);
+    void clear();
 };
 
 #endif // VETTORE_H

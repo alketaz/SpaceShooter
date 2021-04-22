@@ -6,6 +6,9 @@
 
 int main(int argc, char *argv[])
 {
+    vettore<player> v;
+    vettore<player>::iterator it=v.begin();
+    ++it;
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

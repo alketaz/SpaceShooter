@@ -25,7 +25,7 @@ template<class T>
 vettore<T>::iterator::iterator(): punt(nullptr), pte(false){}
 
 template<class T>
-vettore<T>::iterator::iterator(T* t, bool past):punt(t->info), pte(past) {}
+vettore<T>::iterator::iterator(T& t, bool past):punt(t.info), pte(past) {}
 
 template<class T>
 typename vettore<T>::iterator vettore<T>::iterator::operator++(int){
@@ -65,7 +65,7 @@ template<class T>
 vettore<T>::const_iterator::const_iterator(): punt(nullptr), pte(false){}
 
 template<class T>
-vettore<T>::const_iterator::const_iterator(const T* t, bool past): punt(t->info), pte(past) {}
+vettore<T>::const_iterator::const_iterator(const T& t, bool past): punt(t.info), pte(past) {}
 
 template<class T>
 typename vettore<T>::const_iterator vettore<T>::const_iterator::operator--(int){

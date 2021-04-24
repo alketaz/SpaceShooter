@@ -1,5 +1,6 @@
 #ifndef VETTORE_H
 #define VETTORE_H
+#include "deep_ptr.h"
 
 template <class T>
 class vettore{
@@ -7,10 +8,9 @@ public:
     class iterator;
     class const_iterator;
 private:
-    friend class const_iterator;
     int cap;
     int sze;
-    T* info;
+    T info;
 public:
     vettore();
     vettore(int, int =0);
@@ -19,12 +19,11 @@ public:
 
     class iterator{
     private:
-        friend class vettore<T>;
         T* punt;
         bool pte;   //Past The End
     public:
         iterator();
-        iterator(T*, bool =false);
+        iterator(T&, bool =false);
         iterator operator++(int);
         iterator& operator++();
         iterator operator--(int);
@@ -40,7 +39,7 @@ public:
     public:
         const_iterator();
         const_iterator(const iterator&);
-        const_iterator(const T*, bool =false);
+        const_iterator(const T&, bool =false);
         const_iterator operator++(int);
         const_iterator& operator++();
         const_iterator operator--(int);

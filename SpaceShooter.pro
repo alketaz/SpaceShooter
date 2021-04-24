@@ -17,6 +17,7 @@ SOURCES += \
 
 HEADERS += \
     bullet.h \
+    deep_ptr.h \
     mainwindow.h \
     player.h \
     spaceship.h \

@@ -11,7 +11,9 @@ public:
     ~deep_ptr();
     deep_ptr& operator=(const deep_ptr&);
     T& operator*();
+    const T& operator*() const;
     T* operator->();
+    const T* operator->() const;
     T& operator[](unsigned int);
     T* get();
     void reset();

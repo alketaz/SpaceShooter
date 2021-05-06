@@ -6,7 +6,7 @@ template<class T>
 vettore<T>::vettore():cap(1), sze(0), info(new T[cap]){}
 
 template<class T>
-vettore<T>::vettore(int n_ele, int val):cap(n_ele), sze(n_ele), info(new T[cap]){
+vettore<T>::vettore(int n_ele, T val):cap(n_ele), sze(n_ele), info(new T[cap]){
     for(int i=0; i<cap; i++)
         info[i]=val;
 }
@@ -19,6 +19,17 @@ vettore<T>::vettore(const vettore& v): cap(v.cap), sze(v.sze), info(new T[cap]){
 
 template<class T>
 vettore<T>::~vettore<T>(){delete[] info;}
+
+template<class T>
+vettore<T>& vettore<T>::operator=(const vettore<T>& v){
+    if(this!=&v){
+        delete info;
+        info=v.info;
+        sze=v.sze;
+        cap=v.cap;
+    }
+    return *this;
+}
 
 //iterator
 template<class T>

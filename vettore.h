@@ -1,21 +1,21 @@
 #ifndef VETTORE_H
 #define VETTORE_H
 #include "deep_ptr.h"
+#include<iostream>
 
 template <class T>
 class vettore{
-public:
-    class iterator;
-    class const_iterator;
 private:
     int cap;
     int sze;
-    T info;
+    T* info;
 public:
     vettore();
-    vettore(int, int =0);
+    vettore(int, T =0);
     vettore(const vettore&);
     ~vettore();
+
+    vettore<T>& operator=(const vettore<T>&);
 
     class iterator{
     private:
@@ -61,5 +61,12 @@ public:
     void erase(iterator, iterator);
     void clear();
 };
+
+template<class T>
+std::ostream& operator<<(std::ostream& os, const vettore<T>& v){
+    for(typename vettore<T>::const_iterator it = v.begin(); it++; it!=v.end())
+        os<<*it<<" ";
+    return os;
+}
 
 #endif // VETTORE_H

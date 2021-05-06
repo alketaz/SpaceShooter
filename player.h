@@ -10,6 +10,8 @@ private:
 public:
     player(double =500, const bullet* =new bullet(), unsigned int =3);
     player(const player &);
+    ~player() =default;
+    player& operator=(const player&);
 
     void useSpecial();
     void addSpecial();

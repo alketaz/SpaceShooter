@@ -1,7 +1,7 @@
 #include "deep_ptr.h"
 
 template<class T>
-deep_ptr<T>::deep_ptr(T* t): info(t==nullptr ? nullptr : new T(t)){}
+deep_ptr<T>::deep_ptr(T* t): info(t==nullptr ? nullptr : new T(*t)){}
 
 template<class T>
 deep_ptr<T>::deep_ptr(const deep_ptr& dp): info(dp.info==nullptr ? nullptr : new T(dp.info)){}
@@ -13,7 +13,7 @@ template<class T>
 deep_ptr<T>& deep_ptr<T>::operator=(const deep_ptr& dp){
     if(this!=&dp){
         delete info;
-        info = new T(dp.info);
+        info = new T(*(dp.info));
     }
     return *this;
 }

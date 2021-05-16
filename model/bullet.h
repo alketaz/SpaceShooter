@@ -5,7 +5,7 @@ class bullet{
 private:
     double dmg;
 public:
-    bullet();
+    bullet(double d =50);
     bullet(const bullet&);
     double getDmg() const;
 };

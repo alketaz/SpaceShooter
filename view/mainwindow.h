@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPixmap>
+#include "mainwindowview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,6 +18,7 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
+    /*Ui::MainWindow *ui;*/
+    mainwindowview* view;
 };
 #endif // MAINWINDOW_H

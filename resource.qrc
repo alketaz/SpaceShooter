@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/img">
+        <file alias="bg.jpg">img/bg.jpg</file>
+        <file alias="title.png">img/title.png</file>
+        <file alias="icon.png">img/icon.png</file>
+    </qresource>
+    <qresource prefix="/style">
+        <file alias="QPushButton.css">style/QPushButton.css</file>
+    </qresource>
+</RCC>

@@ -12,8 +12,15 @@ private:
     void loadBackground();
     void loadTitle();
     void loadButtons();
+
 public:
     mainmenu();
+
+signals:
+    void onPlayPressed();
+    void onTutorialPressed();
+    void onOptionsPressed();
+    void onExitPressed();
 };
 
 #endif // MAINMENU_H

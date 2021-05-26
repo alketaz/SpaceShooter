@@ -1,4 +1,5 @@
 #include "mainmenu.h"
+#include <qapplication.h>
 
 mainmenu::mainmenu()
 {
@@ -25,9 +26,9 @@ void mainmenu::loadTitle() {
 }
 
 void mainmenu::loadButtons() {
-    QPushButton* playbtn = new QPushButton();
+    QPushButton* playbtn = new QPushButton("Gioca");
     playbtn->setGeometry(sceneRect().width()/2-60, sceneRect().height()/2, 120, 60);
-    playbtn->setText("Gioca");
+    /*playbtn->setText("Gioca");*/
     playbtn->setStyleSheet("QPushButton {color: orange;"
                            "font-weight: bold;"
                            "background-color: rgba(0, 0, 0, 50);"
@@ -35,15 +36,14 @@ void mainmenu::loadButtons() {
                            "border-radius: 10px;"
                            "outline: none;"
                            "outline-radius: 10px;"
-                           "opacity: 0.9;"
-                           "transition: 0.5s;}"
+                           "opacity: 0.9;}"
                            "QPushButton:hover {"
                            "background-color: rgba(150, 150, 150, 50);}");
     addWidget(playbtn);
 
-    QPushButton* tutorialbtn = new QPushButton();
+    QPushButton* tutorialbtn = new QPushButton("Tutorial");
     tutorialbtn->setGeometry(sceneRect().width()/2-60, sceneRect().height()/2+80, 120, 60);
-    tutorialbtn->setText("Tutorial");
+    /*tutorialbtn->setText("Tutorial");*/
     tutorialbtn->setStyleSheet("QPushButton {color: orange;"
                            "font-weight: bold;"
                            "background-color: rgba(0, 0, 0, 50);"
@@ -51,15 +51,14 @@ void mainmenu::loadButtons() {
                            "border-radius: 10px;"
                            "outline: none;"
                            "outline-radius: 10px;"
-                           "opacity: 0.9;"
-                           "transition: 0.5s}"
+                           "opacity: 0.9;}"
                            "QPushButton:hover {"
                            "background-color: rgba(150, 150, 150, 50);}");
     addWidget(tutorialbtn);
 
-    QPushButton* optionbtn = new QPushButton();
+    QPushButton* optionbtn = new QPushButton("Opzioni");
     optionbtn->setGeometry(sceneRect().width()/2-60, sceneRect().height()/2+160, 120, 60);
-    optionbtn->setText("Opzioni");
+    /*optionbtn->setText("Opzioni");*/
     optionbtn->setStyleSheet("QPushButton {color: orange;"
                            "font-weight: bold;"
                            "background-color: rgba(0, 0, 0, 50);"
@@ -67,15 +66,15 @@ void mainmenu::loadButtons() {
                            "border-radius: 10px;"
                            "outline: none;"
                            "outline-radius: 10px;"
-                           "opacity: 0.9;"
-                           "transition: 0.5s}"
+                           "opacity: 0.9;}"
                            "QPushButton:hover {"
                            "background-color: rgba(150, 150, 150, 50);}");
     addWidget(optionbtn);
 
-    QPushButton* exitbtn = new QPushButton();
+    QPushButton* exitbtn = new QPushButton("Esci");
+
     exitbtn->setGeometry(sceneRect().width()/2-60, sceneRect().height()/2+240, 120, 60);
-    exitbtn->setText("Esci");
+    /*exitbtn->setText("Esci");*/
     exitbtn->setStyleSheet("QPushButton {color: orange;"
                            "font-weight: bold;"
                            "background-color: rgba(0, 0, 0, 50);"
@@ -83,9 +82,13 @@ void mainmenu::loadButtons() {
                            "border-radius: 10px;"
                            "outline: none;"
                            "outline-radius: 10px;"
-                           "opacity: 0.9;"
-                           "transition: 0.5s}"
+                           "opacity: 0.9;}"
                            "QPushButton:hover {"
                            "background-color: rgba(150, 150, 150, 50);}");
     addWidget(exitbtn);
+
+    /*connect(playbtn, &QPushButton::clicked, this, &mainmenu::onPlayPressed);
+    connect(tutorialbtn, &QPushButton::clicked, this, &mainmenu::onTutorialPressed);
+    connect(optionbtn, &QPushButton::clicked, this, &mainmenu::onOptionsPressed);*/
+    connect(exitbtn, &QPushButton::clicked, this, &QApplication::exit);    //ulteriore schermata per uscire
 }

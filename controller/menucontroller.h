@@ -10,10 +10,8 @@ class menucontroller : public controller
 private:
     QGraphicsScene* scene;
 public:
-    explicit menucontroller(QObject *parent = nullptr);
-    void setScene();
-    QGraphicsScene* getScene() const;
-signals:
+    explicit menucontroller();
+    QGraphicsScene* getScene() const override;
 
 };
 

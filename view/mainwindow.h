@@ -4,6 +4,10 @@
 #include <QMainWindow>
 #include <QPixmap>
 #include "mainwindowview.h"
+#include "controller.h"
+#include "controller/menucontroller.h"
+#include "viewSelector.h"
+#include <QCloseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,8 +21,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void updateScene(viewSelector v);
+
 private:
     /*Ui::MainWindow *ui;*/
     mainwindowview* view;
+    controller* contr;
+    //model* model;
+    void closeEvent(QCloseEvent *event) override;
 };
 #endif // MAINWINDOW_H

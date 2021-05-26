@@ -32,7 +32,8 @@ HEADERS += \
     model/vettore.h \
     view/mainmenu.h \
     view/mainwindow.h \
-    view/mainwindowview.h
+    view/mainwindowview.h \
+    view/viewSelector.h
 
 FORMS += \
     view/mainwindow.ui

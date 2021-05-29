@@ -8,7 +8,7 @@ class menucontroller : public controller
 {
     Q_OBJECT
 private:
-    mainmenu* scene;
+    QGraphicsScene* scene;
 public:
     explicit menucontroller();
     QGraphicsScene* getScene() const override;

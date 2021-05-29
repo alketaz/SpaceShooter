@@ -17,6 +17,7 @@ SOURCES += \
     model/player.cpp \
     model/spaceship.cpp \
     model/vettore.cpp \
+    view/gamescene.cpp \
     view/mainmenu.cpp \
     view/mainwindow.cpp \
     view/mainwindowview.cpp
@@ -30,6 +31,7 @@ HEADERS += \
     model/spaceship.h \
     model/enemy.h \
     model/vettore.h \
+    view/gamescene.h \
     view/mainmenu.h \
     view/mainwindow.h \
     view/mainwindowview.h \

@@ -11,7 +11,7 @@ mainmenu::mainmenu()
 
 void mainmenu::loadBackground(){
     QPixmap bg(":/img/bg.jpg");
-    bg = bg.scaled(1920,1080,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+    bg = bg.scaled(sceneRect().width(),sceneRect().height(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
     QBrush brush(bg);
     setBackgroundBrush(brush);
 }

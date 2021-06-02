@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include "model/deep_ptr.h"
 #include "model/player.h"
+#include "model/enemy.h"
 
 class gameScene : public QGraphicsScene
 {
@@ -12,7 +13,7 @@ public:
     gameScene();
 
 private:
-    deep_ptr
+    //deep_ptr<enemy> enemy;
 };
 
 #endif // GAMESCENE_H

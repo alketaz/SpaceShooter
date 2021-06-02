@@ -1,7 +1,7 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#import "spaceship.h"
+#include "spaceship.h"
 
 class enemy: public spaceship{
 private:

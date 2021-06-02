@@ -6,6 +6,8 @@
 
 class mainwindowview : public QGraphicsView
 {
+private:
+    void resizeEvent(QResizeEvent*);
 public:
     mainwindowview();
 };

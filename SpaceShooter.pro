@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     controller/controller.cpp \
     controller/menucontroller.cpp \
+    controller/playcontroller.cpp \
     model/bullet.cpp \
     model/deep_ptr.cpp \
     main.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     controller/controller.h \
     controller/menucontroller.h \
+    controller/playcontroller.h \
     model/bullet.h \
     model/deep_ptr.h \
     model/player.h \

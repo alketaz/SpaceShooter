@@ -28,9 +28,9 @@ void MainWindow::updateScene(viewSelector v){
         case viewSelector::mainMenu:
             contr = new menucontroller();
         break;
-        /*case viewSelector::playScene:
+        case viewSelector::playScene:
             contr = new playcontroller();
-        break;
+        /*break;
         case viewSelector::tutorialScene:
             contr= new tutorialcontroler();
         break;
@@ -38,6 +38,8 @@ void MainWindow::updateScene(viewSelector v){
             contr = new optionscontroller();
         break;*/
     }
+
+    view->setScene(contr->getScene());
 
     connect(contr, SIGNAL(sceneRequest()), this, SLOT(updateScene()));
 }

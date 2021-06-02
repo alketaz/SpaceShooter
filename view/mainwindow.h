@@ -4,8 +4,9 @@
 #include <QMainWindow>
 #include <QPixmap>
 #include "mainwindowview.h"
-#include "controller.h"
+#include "controller/controller.h"
 #include "controller/menucontroller.h"
+#include "controller/playcontroller.h"
 #include "viewSelector.h"
 #include <QCloseEvent>
 

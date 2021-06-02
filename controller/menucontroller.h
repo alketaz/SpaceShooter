@@ -1,6 +1,6 @@
 #ifndef MENUCONTROLLER_H
 #define MENUCONTROLLER_H
-
+#include <QObject>
 #include "controller/controller.h"
 #include "view/mainmenu.h"
 
@@ -11,7 +11,7 @@ private:
     QGraphicsScene* scene;
 public:
     explicit menucontroller();
-    /*QGraphicsScene* getScene() const override;*/
+    QGraphicsScene* getScene() const override;
 
 };
 

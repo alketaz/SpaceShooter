@@ -5,5 +5,5 @@ menucontroller::menucontroller() : controller(){
     /*connect(scene, &mainmenu::onPlayPressed, this, emit controller::sceneRequest(viewSelector::playScene));*/
 }
 
-/*QGraphicsScene* menucontroller::getScene() const{return scene;}*/
+QGraphicsScene* menucontroller::getScene() const{return scene;}
 

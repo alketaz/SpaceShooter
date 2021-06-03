@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "mainwindowview.h"
+#include "view/mainwindow.h"
+#include "view/mainwindowview.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 
@@ -13,11 +13,8 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), view(new mainwindo
     setMinimumSize(QSize(1280, 720));
     resize(QSize(1920,1080));
     mainmenu* menu = new mainmenu;
-    view->setScene(menu);
     setCentralWidget(view);
-
-    /*connect(contr, SIGNAL(updateScene()), view, SLOT(setScene()));
-    connect()*/
+    updateScene(viewSelector::mainMenu);
 }
 
 void MainWindow::updateScene(viewSelector v){
@@ -39,9 +36,9 @@ void MainWindow::updateScene(viewSelector v){
         break;*/
     }
 
-    view->setScene(contr->getScene());
+    connect(contr, &controller::sceneRequest, this, &MainWindow::updateScene);
 
-    connect(contr, SIGNAL(sceneRequest()), this, SLOT(updateScene()));
+    view->setScene(contr->getScene());
 }
 
 void MainWindow::closeEvent (QCloseEvent *event)

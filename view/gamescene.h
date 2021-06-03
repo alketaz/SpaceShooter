@@ -2,9 +2,11 @@
 #define GAMESCENE_H
 
 #include <QGraphicsScene>
+#include <QGraphicsRectItem>
 #include "model/deep_ptr.h"
 #include "model/player.h"
 #include "model/enemy.h"
+#include "view/2D_models/playermodel.h"
 
 class gameScene : public QGraphicsScene
 {

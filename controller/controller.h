@@ -13,7 +13,7 @@ public:
     virtual QGraphicsScene* getScene() const =0;
 
 signals:
-    void  sceneRequest(viewSelector v);
+    void sceneRequest(viewSelector v);
 };
 
 #endif // CONTROLLER_H

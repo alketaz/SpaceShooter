@@ -1,5 +1,4 @@
 #include "mainmenu.h"
-#include <qapplication.h>
 
 mainmenu::mainmenu()
 {
@@ -87,8 +86,8 @@ void mainmenu::loadButtons() {
                            "background-color: rgba(150, 150, 150, 50);}");
     addWidget(exitbtn);
 
-    /*connect(playbtn, &QPushButton::clicked, this, &mainmenu::onPlayPressed);
-    connect(tutorialbtn, &QPushButton::clicked, this, &mainmenu::onTutorialPressed);
+    connect(playbtn, &QPushButton::clicked, this, &mainmenu::onPlayPressed);
+    /*connect(tutorialbtn, &QPushButton::clicked, this, &mainmenu::onTutorialPressed);
     connect(optionbtn, &QPushButton::clicked, this, &mainmenu::onOptionsPressed);*/
     connect(exitbtn, &QPushButton::clicked, this, &QApplication::exit);    //ulteriore schermata per uscire
 }

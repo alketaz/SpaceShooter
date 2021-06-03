@@ -5,9 +5,11 @@
 #include <QGraphicsPixmapItem>
 #include <QPalette>
 #include <QPushButton>
+#include <QApplication>
 
 class mainmenu : public QGraphicsScene
 {
+    Q_OBJECT
 private:
     void loadBackground();
     void loadTitle();

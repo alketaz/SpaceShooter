@@ -3,8 +3,10 @@
 
 #include <QGraphicsRectItem>
 #include <QTimer>
+#include <QGraphicsScene>
+#include "enemymodel.h"
 
-class bulletModel : public QGraphicsRectItem, public QObject
+class bulletModel : public QObject, public QGraphicsRectItem
 {
 private:
     QTimer* timer;

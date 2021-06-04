@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), view(new mainwindo
 
     setMinimumSize(QSize(1280, 720));
     resize(QSize(1920,1080));
-    mainmenu* menu = new mainmenu;
     setCentralWidget(view);
     updateScene(viewSelector::mainMenu);
 }

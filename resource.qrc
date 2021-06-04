@@ -3,6 +3,13 @@
         <file alias="bg.jpg">img/bg.jpg</file>
         <file alias="title.png">img/title.png</file>
         <file alias="icon.png">img/icon.png</file>
+        <file alias="user1.png">img/UserShip1.png</file>
+        <file alias="user2.png">img/UserShip2.png</file>
+        <file alias="user3.png">img/UserShip3.png</file>
+        <file alias="game_bg.png">img/game_bg.png</file>
+        <file alias="enemy1.png">img/baseEnemy1.png</file>
+        <file alias="enemy2.png">img/baseEnemy2.png</file>
+        <file alias="enemy3.png">img/baseEnemy3.png</file>
     </qresource>
     <qresource prefix="/style">
         <file alias="QPushButton.css">style/QPushButton.css</file>

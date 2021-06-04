@@ -8,6 +8,13 @@ bulletModel::bulletModel(): timer(new QTimer())
 }
 
 void bulletModel::move(){
+    QList<QGraphicsItem*> impact = collidingItems();
+    for(int i=0, n=impact.size(); i<n; i++){
+        if(typeid(*(impact[i]))==typeid(enemyModel)){
+            scene()->removeItem(this);
+            delete this;
+        }
+    }
     if(pos().y()<-16)
         delete this;
     else

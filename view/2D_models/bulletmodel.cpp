@@ -3,6 +3,7 @@
 bulletModel::bulletModel(): timer(new QTimer())
 {
     setRect(0,0,4,16);
+    setBrush(Qt::red);
     connect(timer, &QTimer::timeout, this, [=](){emit move();});
     timer->start(16);
 }

@@ -15,6 +15,7 @@ SOURCES += \
     model/bullet.cpp \
     model/deep_ptr.cpp \
     main.cpp \
+    model/enemy.cpp \
     model/player.cpp \
     model/spaceship.cpp \
     model/vettore.cpp \
@@ -33,9 +34,10 @@ HEADERS += \
     controller/playcontroller.h \
     model/bullet.h \
     model/deep_ptr.h \
+    model/enemy.h \
+    model/gamephase.h \
     model/player.h \
     model/spaceship.h \
-    model/enemy.h \
     model/vettore.h \
     view/2D_models/bulletmodel.h \
     view/2D_models/enemymodel.h \

@@ -11,7 +11,7 @@ enemyModel::enemyModel(): timer(new QTimer()), updateTimer(new QTimer())
     sprite.push_back(ship3);
     setSprite(rand()%3);
     timer->start(1200);
-    updateTimer->start(100);
+    updateTimer->start(200);
     connect(timer, &QTimer::timeout, this, &enemyModel::move);
     connect(updateTimer, &QTimer::timeout, this, &enemyModel::changeSprite);
 }

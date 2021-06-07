@@ -6,8 +6,10 @@ class spaceship{
 private:
     double maxHP;
     double hpLeft;
-    const bullet* bult;
+    /*const bullet* bult;*/
     static double hpRecovery;
+    unsigned int width, height;
+    int x, y;
 public:
     spaceship(double =100, const bullet* =new bullet());
     spaceship(const spaceship&);

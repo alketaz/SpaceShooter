@@ -11,12 +11,12 @@ playerModel::playerModel(): updateTimer(new QTimer()), sprite(0)
     sprite.push_back(ship3);
     setSprite();
     setFlag(QGraphicsItem::ItemIsFocusable);
-    updateTimer->start(100);
+    updateTimer->start(200);
     connect(updateTimer, &QTimer::timeout, this, &playerModel::changeSprite);
 }
 
 void playerModel::setSprite(unsigned int i){
-    setPixmap(sprite[i].scaled(64,64));
+    setPixmap(sprite[i].scaled(64,80));
 }
 
 void playerModel::keyPressEvent(QKeyEvent *event){

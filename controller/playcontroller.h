@@ -9,6 +9,9 @@ class playcontroller: public controller
     Q_OBJECT;
 private:
     gameScene* scene;
+
+signals:
+
 public:
     playcontroller();
     QGraphicsScene* getScene() const;

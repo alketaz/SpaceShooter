@@ -14,10 +14,13 @@ private:
     deep_ptr<player> p;
 
 public:
-    vettore<deep_ptr<spaceship>> FirstWave(unsigned int);
+    void FirstWave(unsigned int);
     void setWave(const vettore<deep_ptr<spaceship>>&);
     unsigned int enemySize() const;
     playModel();
+
+public slots:
+    void updateEnemyPosition();
 };
 
 #endif // PLAYMODEL_H

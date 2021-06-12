@@ -4,7 +4,7 @@
 
 playModel::playModel(): enemies(), p(new player()){}
 
-vettore<deep_ptr<spaceship>> playModel::FirstWave(unsigned int screen_w){
+void playModel::FirstWave(unsigned int screen_w){
     vettore<deep_ptr<spaceship>> aux;
     for(int i=0; i<24; i++){
         spaceship* ptr = new enemy();
@@ -13,9 +13,14 @@ vettore<deep_ptr<spaceship>> playModel::FirstWave(unsigned int screen_w){
         ptr->setY(-(ptr->getSpaceshipHeight()+ptr->getRow()*ptr->getSpaceshipHeight()*2));
         aux.push_back(ptr);
     }
-    return aux;
+    enemies = aux;
 }
 
-void playModel::setWave(const vettore<deep_ptr<spaceship>>& v){enemies = v;}
+
+
+void playModel::updateEnemyPosition(){
+    for(vettore<deep_ptr<spaceship>>::iterator it = enemies.begin(); it!=enemies.end();it++)
+        (*it)->setY((*it)->getY()+16);
+};
 
 unsigned int playModel::enemySize() const{return enemies.size();}

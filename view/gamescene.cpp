@@ -31,7 +31,7 @@ void gameScene::loadEnemies()
     }*/
     switch(phase){
     case gamePhase::base:
-        match->setWave(match->FirstWave(width()));
+        match->FirstWave(width());
         for(vettore<deep_ptr<spaceship>>::const_iterator cit = match->enemies.begin(); cit!=match->enemies.end(); cit++){
             enemyModel* eM = new enemyModel();
             eM->setPos((*cit)->getX(), (*cit)->getY());
@@ -53,6 +53,7 @@ gameScene::gameScene(): match(new playModel()), phase(gamePhase::base)
     loadBG();
     loadPlayer();
     loadEnemies();
+    connect(this, &gameScene::updateMatch, match, &playModel::updateEnemyPosition);
 }
 
 void gameScene::enemiesCleared(){

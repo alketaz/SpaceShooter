@@ -22,6 +22,9 @@ public:
     void loadPlayer();
     void loadEnemies();
 
+signals:
+    void updateMatch();
+
 public slots:
     void enemiesCleared();
 };

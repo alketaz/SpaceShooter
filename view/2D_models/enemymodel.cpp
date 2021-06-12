@@ -2,7 +2,6 @@
 
 enemyModel::enemyModel(): timer(new QTimer()), updateTimer(new QTimer())
 {
-    setPos(32,-64);
     QPixmap ship1(":/img/enemy1.png");
     QPixmap ship2(":/img/enemy2.png");
     QPixmap ship3(":/img/enemy3.png");

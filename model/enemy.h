@@ -3,11 +3,9 @@
 
 #include "spaceship.h"
 
-class enemy: public spaceship{
-private:
-
+class enemy: public spaceship{  
 public:
-    enemy(unsigned int w =64, unsigned int h =64, int xPos =-99999, int yPos =-99999);
+    enemy();
 };
 
 #endif // ENEMY_H

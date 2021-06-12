@@ -1,6 +1,3 @@
 #include "enemy.h"
 
-enemy::enemy()
-{
-
-}
+enemy::enemy(): spaceship(3, 1) {}

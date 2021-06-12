@@ -1,26 +1,33 @@
 #ifndef SPACESHIP_H
 #define SPACESHIP_H
-#include "bullet.h"
+
 
 class spaceship{
 private:
-    double maxHP;
-    double hpLeft;
-    /*const bullet* bult;*/
-    static double hpRecovery;
-    unsigned int width, height;
+    unsigned int maxHP, hpLeft, dmg, row;
+    static unsigned int width, height;
     int x, y;
+
 public:
-    spaceship(double =100, const bullet* =new bullet());
+    static double hpRecovery;
+
+    spaceship(unsigned int, unsigned int);
     spaceship(const spaceship&);
-    virtual ~spaceship() =0;
+    virtual ~spaceship() =default;
+
     //metodi
-    void heal();
-    void decreaseHP(const bullet*);
-    double getMaxHP() const;
-    double getHP() const;
-    const bullet* getBull() const;
-    void changeGun(const bullet*);
+    virtual unsigned int getSpaceshipWidth();
+    virtual unsigned int getSpaceshipHeight();
+    void setX(int);
+    virtual const int& getX() const;
+    void setY(int);
+    virtual const int& getY() const;
+    void setRow(unsigned int);
+    const unsigned int& getRow() const;
+    void decreaseHP(unsigned int);
+    const unsigned int& getMaxHP() const;
+    const unsigned int& getHP() const;
+    virtual unsigned int getDmg() const;
 };
 
 #endif // SPACESHIP_H

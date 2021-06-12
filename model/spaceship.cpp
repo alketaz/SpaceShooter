@@ -1,28 +1,37 @@
 #include "spaceship.h"
 
 //costruttori
-spaceship::spaceship(double h, const bullet* b): maxHP(h), hpLeft(maxHP), bult(new bullet(*b)) {}
+spaceship::spaceship(unsigned int h, unsigned int d): maxHP(h), hpLeft(maxHP), dmg(d), row(0), x(0), y(0) {}
 
-spaceship::spaceship(const spaceship& s): maxHP(s.maxHP), hpLeft(s.hpLeft), bult(new bullet(*s.bult)) {}
+spaceship::spaceship(const spaceship& s): maxHP(s.maxHP), hpLeft(s.hpLeft), dmg(s.dmg), row(0), x(s.x), y(s.y) {}
 
-spaceship::~spaceship() =default;
-
-//static field
-double spaceship::hpRecovery = 100;
+//static fields
+double spaceship::hpRecovery = 2;
+unsigned int spaceship::width = 64;
+unsigned int spaceship::height = 64;
 
 //metodi
-void spaceship::heal(){
-    hpLeft+=hpRecovery;
-    if(hpLeft>maxHP)
-        hpLeft=maxHP;
-}
+void spaceship::setX(int i){x = i;}
 
-void spaceship::decreaseHP(const bullet* b) {maxHP -= b->getDmg();}
+const int& spaceship::getX() const{return x;}
 
-double spaceship::getMaxHP() const{return maxHP;}
+void spaceship::setY(int i){y = i;}
 
-double spaceship::getHP() const{return hpLeft;}
+const int& spaceship::getY() const{return y;}
 
-const bullet* spaceship::getBull() const{return bult;}
+void spaceship::setRow(unsigned int i){row = i;}
 
-void spaceship::changeGun(const bullet* b){bult=b;}
+const unsigned int& spaceship::getRow() const{return row;}
+
+
+unsigned int spaceship::getSpaceshipWidth(){return width;}
+
+unsigned int spaceship::getSpaceshipHeight(){return height;}
+
+void spaceship::decreaseHP(unsigned int i) {maxHP -= i;}
+
+const unsigned int& spaceship::getMaxHP() const{return maxHP;}
+
+const unsigned int& spaceship::getHP() const{return hpLeft;}
+
+unsigned int spaceship::getDmg() const{return dmg;}

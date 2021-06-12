@@ -12,13 +12,14 @@ SOURCES += \
     controller/controller.cpp \
     controller/menucontroller.cpp \
     controller/playcontroller.cpp \
-    model/bullet.cpp \
     model/deep_ptr.cpp \
     main.cpp \
     model/enemy.cpp \
     model/player.cpp \
     model/spaceship.cpp \
+    model/specialenemy.cpp \
     model/vettore.cpp \
+    model/playmodel.cpp \
     view/2D_models/bulletmodel.cpp \
     view/2D_models/enemymodel.cpp \
     view/2D_models/playermodel.cpp \
@@ -32,13 +33,14 @@ HEADERS += \
     controller/controller.h \
     controller/menucontroller.h \
     controller/playcontroller.h \
-    model/bullet.h \
     model/deep_ptr.h \
     model/enemy.h \
     model/gamephase.h \
     model/player.h \
     model/spaceship.h \
+    model/specialenemy.h \
     model/vettore.h \
+    model/playmodel.h \
     view/2D_models/bulletmodel.h \
     view/2D_models/enemymodel.h \
     view/2D_models/playermodel.h \
@@ -57,5 +59,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resource.qrc \
     resource.qrc
+

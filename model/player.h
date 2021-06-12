@@ -4,20 +4,18 @@
 class player: public spaceship{
 private:
     unsigned int maxSpecial;
-    static unsigned int maxLives;
     unsigned int specialLeft;
-    unsigned int livesLeft;
+
 public:
-    player(double =500, const bullet* =new bullet(), unsigned int =3);
+    player(unsigned int =10, unsigned int =3);
     player(const player &);
     ~player() =default;
     player& operator=(const player&);
 
+    void heal();
     void useSpecial();
-    void addSpecial();
+    //void addSpecial();
     unsigned int getSpecial() const;
-    unsigned int getLives()const;
-
 };
 
 #endif // PLAYER_H

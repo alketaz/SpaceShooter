@@ -21,6 +21,7 @@ public:
     unsigned int enemySize() const;
     unsigned int getScreenW() const;
     unsigned int getScreenH() const;
+    void movePlayer(int =0, int =0);
 
 public slots:
     void updateEnemyPosition();

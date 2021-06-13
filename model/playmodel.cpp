@@ -32,3 +32,18 @@ unsigned int playModel::enemySize() const{return enemies.size();}
 unsigned int playModel::getScreenW()const{return screen_w;}
 
 unsigned int playModel::getScreenH()const{return screen_h;}
+
+void playModel::movePlayer(int x, int y){
+    p->setX(p->getX()+x); p->setX(p->getY()+y);
+    if(p->getX()>screen_w-p->getSpaceshipWidth())
+        p->setX(screen_w-p->getSpaceshipWidth());
+
+    if(p->getX()<0)
+        p->setX(0);
+
+    if(p->getY()>screen_h - p->getSpaceshipHeight())
+        p->setY(screen_h - p->getSpaceshipHeight());
+
+    if(p->getY()<0)
+        p->setY(0);
+}

@@ -10,13 +10,14 @@ class playerModel : public QObject, public QGraphicsPixmapItem
 {
 private:
     QTimer* updateTimer;
-    unsigned int spriteSel;
+    unsigned int spriteSel, width, height;
     std::vector<QPixmap> sprite;
     void setSprite(unsigned int =0);
 public:
     playerModel();
-    void keyPressEvent(QKeyEvent* event);
-
+    //void keyPressEvent(QKeyEvent* event);
+    unsigned int getWidth() const;
+    unsigned int getHeight() const;
 public slots:
     void changeSprite();
 };

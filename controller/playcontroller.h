@@ -21,7 +21,8 @@ public:
 public slots:
     void tick();
     //void checkCollisions();
-    //void checkPlayerActions();
+    void checkPlayerActions();
+    void checkForBullets();
 };
 
 #endif // PLAYCONTROLLER_H

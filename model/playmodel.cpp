@@ -2,9 +2,12 @@
 #include "model/vettore.h"
 #include <QDebug>
 
-playModel::playModel(): enemies(), p(new player()){}
+playModel::playModel(unsigned int w, unsigned int h): enemies(), p(new player()), screen_w(w), screen_h(h){
+    p->setX(screen_w/2-32);
+    p->setY(screen_h-96);
+}
 
-void playModel::FirstWave(unsigned int screen_w){
+void playModel::FirstWave(){
     vettore<deep_ptr<spaceship>> aux;
     for(int i=0; i<24; i++){
         spaceship* ptr = new enemy();
@@ -21,6 +24,11 @@ void playModel::FirstWave(unsigned int screen_w){
 void playModel::updateEnemyPosition(){
     for(vettore<deep_ptr<spaceship>>::iterator it = enemies.begin(); it!=enemies.end();it++)
         (*it)->setY((*it)->getY()+16);
+    qDebug()<<"New pos: "<<enemies[0]->getY();
 };
 
 unsigned int playModel::enemySize() const{return enemies.size();}
+
+unsigned int playModel::getScreenW()const{return screen_w;}
+
+unsigned int playModel::getScreenH()const{return screen_h;}

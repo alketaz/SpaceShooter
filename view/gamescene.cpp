@@ -1,5 +1,17 @@
 #include "gamescene.h"
 
+gameScene::gameScene(playModel* m): match(m), phase(gamePhase::base), playerActions(new bool[5]) //, moveTimer(new QTimer())
+{
+    for(int i=0;i<5;i++)
+        playerActions[i]=false;
+    setSceneRect(0,0,m->getScreenW(),m->getScreenH());
+    loadBG();
+    loadPlayer();
+    loadEnemies();
+    //moveTimer->start(1200);
+    //connect(moveTimer, &QTimer::timeout, this, &gameScene::move);
+}
+
 void gameScene::loadBG()
 {
     QPixmap bg(":/img/game_bg.png");
@@ -29,14 +41,18 @@ void gameScene::loadEnemies()
             addItem(enemy);
         }
     }*/
+
     switch(phase){
     case gamePhase::base:
-        match->FirstWave(width());
+        match->FirstWave();
+        vettore<enemyModel*> aux;
         for(vettore<deep_ptr<spaceship>>::const_iterator cit = match->enemies.begin(); cit!=match->enemies.end(); cit++){
             enemyModel* eM = new enemyModel();
             eM->setPos((*cit)->getX(), (*cit)->getY());
+            aux.push_back(eM);
             addItem(eM);
         }
+        enemyItems = aux;
         break;
     /*case gamePhase::special:
         break;
@@ -47,15 +63,6 @@ void gameScene::loadEnemies()
     }
 }
 
-gameScene::gameScene(): match(new playModel()), phase(gamePhase::base)
-{
-    setSceneRect(0,0,1920,1080);
-    loadBG();
-    loadPlayer();
-    loadEnemies();
-    connect(this, &gameScene::updateMatch, match, &playModel::updateEnemyPosition);
-}
-
 void gameScene::enemiesCleared(){
     if(phase == gamePhase::base)
         phase = gamePhase::special;
@@ -64,4 +71,9 @@ void gameScene::enemiesCleared(){
     else
         phase = gamePhase::won;
     loadEnemies();
+}
+
+void gameScene::move(){
+    for(vettore<enemyModel*>::iterator it = enemyItems.begin(); it!=enemyItems.end(); it++)
+        (*it)->setPos((*it)->x(), (*it)->y()+16);
 }

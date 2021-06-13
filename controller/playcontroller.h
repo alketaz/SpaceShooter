@@ -9,12 +9,19 @@ class playcontroller: public controller
     Q_OBJECT;
 private:
     gameScene* scene;
+    playModel* model;
+    QTimer* moveTimer;
 
 signals:
 
 public:
     playcontroller();
     QGraphicsScene* getScene() const;
+
+public slots:
+    void tick();
+    //void checkCollisions();
+    //void checkPlayerActions();
 };
 
 #endif // PLAYCONTROLLER_H

@@ -6,18 +6,21 @@
 #include "model/player.h"
 #include "model/enemy.h"
 
-class playModel
+class playModel: public QObject
 {
 friend class gameScene;
 private:
     vettore<deep_ptr<spaceship>> enemies;
     deep_ptr<player> p;
+    unsigned int screen_w, screen_h;
 
 public:
-    void FirstWave(unsigned int);
+    playModel(unsigned int w =1920, unsigned int h =1080);
+    void FirstWave();
     void setWave(const vettore<deep_ptr<spaceship>>&);
     unsigned int enemySize() const;
-    playModel();
+    unsigned int getScreenW() const;
+    unsigned int getScreenH() const;
 
 public slots:
     void updateEnemyPosition();

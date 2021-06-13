@@ -15,18 +15,22 @@ class gameScene : public QGraphicsScene
 private:
     playModel* match;
     gamePhase phase;
+    vettore<enemyModel*> enemyItems;
+    bool* playerActions;
+    //QTimer* moveTimer;
 
 public:
-    gameScene();
+    gameScene(playModel*);
     void loadBG();
     void loadPlayer();
     void loadEnemies();
 
-signals:
-    void updateMatch();
+/*signals:
+    void updateMatch();*/
 
 public slots:
     void enemiesCleared();
+    void move();
 };
 
 #endif // GAMESCENE_H

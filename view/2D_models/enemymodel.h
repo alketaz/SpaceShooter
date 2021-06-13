@@ -8,7 +8,7 @@ class enemyModel : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 private:
-    QTimer* timer;
+    //QTimer* timer;
     QTimer* updateTimer;
     unsigned int spriteSel;
     std::vector<QPixmap> sprite;
@@ -21,7 +21,7 @@ signals:
     void itemMoved();
 
 public slots:
-    void move();
+    //void move();
     void changeSprite();
 };
 

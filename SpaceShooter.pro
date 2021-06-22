@@ -22,6 +22,7 @@ SOURCES += \
     model/playmodel.cpp \
     view/2D_models/bulletmodel.cpp \
     view/2D_models/enemymodel.cpp \
+    view/2D_models/healthbar.cpp \
     view/2D_models/playermodel.cpp \
     view/gamescene.cpp \
     view/mainmenu.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     controller/playcontroller.h \
     model/deep_ptr.h \
     model/enemy.h \
+    model/enumClasses.h \
     model/gamephase.h \
     model/player.h \
     model/spaceship.h \
@@ -43,6 +45,7 @@ HEADERS += \
     model/playmodel.h \
     view/2D_models/bulletmodel.h \
     view/2D_models/enemymodel.h \
+    view/2D_models/healthbar.h \
     view/2D_models/playermodel.h \
     view/gamescene.h \
     view/mainmenu.h \
@@ -60,4 +63,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resource.qrc
+
+DISTFILES +=
 

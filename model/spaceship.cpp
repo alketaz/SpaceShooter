@@ -1,7 +1,8 @@
 #include "spaceship.h"
+#include <QDebug>
 
 //costruttori
-spaceship::spaceship(unsigned int h, unsigned int d): maxHP(h), hpLeft(maxHP), dmg(d), row(0), x(0), y(0) {}
+spaceship::spaceship(unsigned int h, unsigned int d): maxHP(h), hpLeft(h), dmg(d), row(0), x(0), y(0) {}
 
 spaceship::spaceship(const spaceship& s): maxHP(s.maxHP), hpLeft(s.hpLeft), dmg(s.dmg), row(0), x(s.x), y(s.y) {}
 
@@ -28,7 +29,7 @@ unsigned int spaceship::getSpaceshipWidth(){return width;}
 
 unsigned int spaceship::getSpaceshipHeight(){return height;}
 
-void spaceship::decreaseHP(unsigned int i) {maxHP -= i;}
+void spaceship::decreaseHP(unsigned int i) {hpLeft -= i;}
 
 const unsigned int& spaceship::getMaxHP() const{return maxHP;}
 

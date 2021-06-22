@@ -4,7 +4,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
-#include "bulletmodel.h"
+#include "view/2D_models/bulletmodel.h"
 
 class playerModel : public QObject, public QGraphicsPixmapItem
 {

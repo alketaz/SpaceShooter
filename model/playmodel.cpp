@@ -24,7 +24,6 @@ void playModel::FirstWave(){
 void playModel::updateEnemyPosition(){
     for(vettore<deep_ptr<spaceship>>::iterator it = enemies.begin(); it!=enemies.end();it++)
         (*it)->setY((*it)->getY()+16);
-    qDebug()<<"New pos: "<<enemies[0]->getY();
 };
 
 unsigned int playModel::enemySize() const{return enemies.size();}
@@ -33,10 +32,14 @@ unsigned int playModel::getScreenW()const{return screen_w;}
 
 unsigned int playModel::getScreenH()const{return screen_h;}
 
+int playModel::getEnemyHealth(vettore<deep_ptr<spaceship>>::iterator it) const {return (*it)->getHP();}
+
+void playModel::damagePlayer(vettore<deep_ptr<spaceship>>::iterator it){ (*it)->decreaseHP(2);}
+
 void playModel::movePlayer(int x, int y){
     p->setX(p->getX()+x); p->setX(p->getY()+y);
-    if(p->getX()>screen_w-p->getSpaceshipWidth())
-        p->setX(screen_w-p->getSpaceshipWidth());
+    if(p->getX()>screen_w - p->getSpaceshipWidth())
+        p->setX(screen_w - p->getSpaceshipWidth());
 
     if(p->getX()<0)
         p->setX(0);
@@ -47,3 +50,5 @@ void playModel::movePlayer(int x, int y){
     if(p->getY()<0)
         p->setY(0);
 }
+
+void playModel::removeEnemy(unsigned int i) { enemies.erase(i);}

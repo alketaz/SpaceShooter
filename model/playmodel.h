@@ -17,11 +17,13 @@ private:
 public:
     playModel(unsigned int w =1920, unsigned int h =1080);
     void FirstWave();
-    void setWave(const vettore<deep_ptr<spaceship>>&);
     unsigned int enemySize() const;
     unsigned int getScreenW() const;
     unsigned int getScreenH() const;
+    int getEnemyHealth(vettore<deep_ptr<spaceship>>::iterator) const;
+    void damagePlayer(vettore<deep_ptr<spaceship>>::iterator);
     void movePlayer(int =0, int =0);
+    void removeEnemy(unsigned int);
 
 public slots:
     void updateEnemyPosition();

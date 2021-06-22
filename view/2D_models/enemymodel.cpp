@@ -1,6 +1,7 @@
 #include "enemymodel.h"
+#include <QDebug>
 
-enemyModel::enemyModel(): updateTimer(new QTimer())
+enemyModel::enemyModel(enemyType et): type(et), width(64), height(64), updateTimer(new QTimer()), hit(false)
 {
     QPixmap ship1(":/img/enemy1.png");
     QPixmap ship2(":/img/enemy2.png");
@@ -14,7 +15,15 @@ enemyModel::enemyModel(): updateTimer(new QTimer())
 }
 
 void enemyModel::setSprite(unsigned int i){
-    setPixmap(sprite[i].scaled(64,64));
+    setPixmap(sprite[i].scaled(width,height));
+}
+
+void enemyModel::setHit(bool b){hit = b;}
+
+bool enemyModel::getHit() const
+{
+    qDebug() << "addr:"<<this;
+    return hit;
 }
 
 void enemyModel::changeSprite(){
@@ -22,3 +31,7 @@ void enemyModel::changeSprite(){
     spriteSel%=3;
     setSprite(spriteSel);
 }
+
+unsigned int enemyModel::getHeight() const{return height;}
+
+unsigned int enemyModel::getWidth() const{return width;}

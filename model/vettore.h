@@ -7,6 +7,7 @@
 
 template <class T>
 class vettore{
+    friend class iterator;
 private:
     int cap;
     int sze;
@@ -20,12 +21,13 @@ public:
     vettore<T>& operator=(const vettore<T>&);
 
     class iterator{
+        friend class const_iterator;
+        friend class vettore;
     private:
         T* punt;
-        bool pte;   //Past The End
     public:
         iterator();
-        iterator(T*, bool =false);
+        iterator(T*);
         iterator operator++(int);
         iterator& operator++();
         iterator operator--(int);
@@ -41,7 +43,7 @@ public:
     public:
         const_iterator();
         const_iterator(const iterator&);
-        const_iterator(const T*, bool =false);
+        const_iterator(T*);
         const_iterator operator++(int);
         const_iterator& operator++();
         const_iterator operator--(int);
@@ -111,14 +113,14 @@ vettore<T>& vettore<T>::operator=(const vettore<T>& v){
 
 //iterator
 template<class T>
-vettore<T>::iterator::iterator(): punt(nullptr), pte(false){}
+vettore<T>::iterator::iterator(): punt(nullptr){}
 
 template<class T>
-vettore<T>::iterator::iterator(T* t, bool past):punt(t), pte(past){}
+vettore<T>::iterator::iterator(T* t):punt(t){}
 
 template<class T>
 typename vettore<T>::iterator vettore<T>::iterator::operator++(int){
-    vettore<T>::iterator it=*this;
+    vettore<T>::iterator it = *this;
     punt++;
     return it;
 }
@@ -130,9 +132,7 @@ typename vettore<T>::iterator& vettore<T>::iterator::operator++(){
 
 template<class T>
 typename vettore<T>::iterator vettore<T>::iterator::operator--(int){
-    vettore<T>::iterator it=*this;
-    punt--;
-    return it;
+
 }
 
 template<class T>
@@ -160,7 +160,7 @@ template<class T>
 vettore<T>::const_iterator::const_iterator(): ite(nullptr, false){}
 
 template<class T>
-vettore<T>::const_iterator::const_iterator(const T* t, bool past): ite(t, past){}
+vettore<T>::const_iterator::const_iterator(T* t): ite(t){}
 
 template<class T>
 typename vettore<T>::const_iterator vettore<T>::const_iterator::operator--(int){
@@ -206,16 +206,20 @@ template<class T>
 int vettore<T>::capacity() const{return cap;}
 
 template<class T>
-typename vettore<T>::iterator vettore<T>::begin() {return info;}
+typename vettore<T>::iterator vettore<T>::begin() {
+    return info;
+}
 
 template<class T>
-typename vettore<T>::iterator vettore<T>::end(){return iterator(&info[sze], true);}
+typename vettore<T>::iterator vettore<T>::end() {return info+sze;}
 
 template<class T>
-typename vettore<T>::const_iterator vettore<T>::begin() const {return info[0];}
+typename vettore<T>::const_iterator vettore<T>::begin() const {
+    return info;
+}
 
 template<class T>
-typename vettore<T>::const_iterator vettore<T>::end() const {return const_iterator(info[sze],true);}
+typename vettore<T>::const_iterator vettore<T>::end() const {return info+sze;}
 
 template<class T>
 T& vettore<T>::operator[](unsigned int i){return info[i];}
@@ -243,15 +247,26 @@ template<class T>
 void vettore<T>::pop_back(){
     if(sze==0)
         throw "exception";      //ATTENZIONE! SOSTITUIRE CON ECCEZIONE VERA
-    else sze--;
+    else{
+        sze--;
+        T* aux = new T[sze];
+        for(int i=0;i<sze; i++)
+            aux[i]= info[i];
+        delete[] info;
+        info = new T[cap];
+        for(int i=0;i<sze; i++)
+            info[i]=aux[i];
+    }
 }
 
 template<class T>
 void vettore<T>::erase(int i){
-    if(0<=i<=sze){
+    if(i==sze-1)
+        pop_back();
+    else if(0<=i && i<sze-1){
         for(int j=i; j<sze-1; j++)
             info[j]=info[j+1];
-        sze--;
+        pop_back();
     }
     else
         throw "index out of range";

@@ -10,6 +10,7 @@
         <file alias="enemy1.png">img/baseEnemy1.png</file>
         <file alias="enemy2.png">img/baseEnemy2.png</file>
         <file alias="enemy3.png">img/baseEnemy3.png</file>
+        <file alias="healthBar.png">img/healthBar.png</file>
     </qresource>
     <qresource prefix="/style">
         <file alias="QPushButton.css">style/QPushButton.css</file>

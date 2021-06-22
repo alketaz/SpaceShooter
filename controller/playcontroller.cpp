@@ -16,9 +16,14 @@ void playcontroller::tick(){
     tick->start(30);
     QTimer* bulletTick(new QTimer());
     bulletTick->start(500);
-    //connect(tick, &QTimer::timeout, this, &playcontroller::checkCollisions);
+    QTimer* enemyBulletTick(new QTimer());
+    enemyBulletTick->start(100);
+    //connect(tick, &QTimer::timeout, this, &playcontroller::checkGameState);
+    connect(tick, &QTimer::timeout, scene, &gameScene::checkCollisions);
     connect(tick, &QTimer::timeout, this, &playcontroller::checkPlayerActions);
-    connect(bulletTick, &QTimer::timeout, this, &playcontroller::checkForBullets);
+    connect(bulletTick, &QTimer::timeout, this, &playcontroller::spawnBullets);
+    connect(enemyBulletTick, &QTimer::timeout, this, &playcontroller::spawnEnemyBullets);
+    //connect(tick, &QTimer::timeout, this, &playcontroller::checkCollisions);
 }
 
 void playcontroller::checkPlayerActions(){
@@ -30,8 +35,15 @@ void playcontroller::checkPlayerActions(){
     }
 }
 
-void playcontroller::checkForBullets(){
-    bulletModel* bullet = new bulletModel();
-    bullet->setPos(scene->getPlayerPos()[0], scene->getPlayerPos()[1]);
+void playcontroller::spawnBullets(){
+    bulletModel* bullet = new bulletModel(true);
+    bullet->setPos(scene->getPlayerBulletPos()[0], scene->getPlayerBulletPos()[1]);
+    scene->addItem(bullet);
+}
+
+void playcontroller::spawnEnemyBullets(){
+    bulletModel* bullet = new bulletModel(false);
+    unsigned int randEnemy = (rand()%(model->enemySize()));
+    bullet->setPos(scene->getEnemyBulletPos(randEnemy)[0], scene->getEnemyBulletPos(randEnemy)[1]);
     scene->addItem(bullet);
 }

@@ -1,6 +1,7 @@
 #ifndef PLAYCONTROLLER_H
 #define PLAYCONTROLLER_H
 #include <QObject>
+#include "math.h"
 #include "controller.h"
 #include "view/gamescene.h"
 
@@ -12,6 +13,8 @@ private:
     playModel* model;
     QTimer* moveTimer;
 
+    void tick();
+
 signals:
 
 public:
@@ -19,10 +22,9 @@ public:
     QGraphicsScene* getScene() const;
 
 public slots:
-    void tick();
-    //void checkCollisions();
     void checkPlayerActions();
-    void checkForBullets();
+    void spawnEnemyBullets();
+    void spawnBullets();
 };
 
 #endif // PLAYCONTROLLER_H

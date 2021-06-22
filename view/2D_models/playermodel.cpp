@@ -1,6 +1,6 @@
 #include "playermodel.h"
 
-playerModel::playerModel(): updateTimer(new QTimer()), sprite(0), width(64), height(80)
+playerModel::playerModel(): updateTimer(new QTimer()), width(64), height(80), sprite(0)
 {
     QPixmap ship1(":/img/user1.png");
     QPixmap ship2(":/img/user2.png");

@@ -22,7 +22,7 @@ void enemyModel::setHit(bool b){hit = b;}
 
 bool enemyModel::getHit() const
 {
-    qDebug() << "addr:"<<this;
+    qDebug() << this;
     return hit;
 }
 

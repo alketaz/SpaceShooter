@@ -5,11 +5,11 @@ bulletModel::bulletModel(bool b): timer(new QTimer()), playerBullet(b)
     setRect(0,0,4,16);
     setBrush(playerBullet ? Qt::red : Qt::green);
     connect(timer, &QTimer::timeout, this, [=](){emit move();});
-    timer->start(16);
+    timer->start(30);
 }
 
 void bulletModel::move(){
-    setPos(x(), (playerBullet? y()-8 : y()+8));
+    setPos(x(), (playerBullet? y()-12 : y()+12));
 
     if(y()<=-16 || y() >= 1080){
         scene()->removeItem(this);

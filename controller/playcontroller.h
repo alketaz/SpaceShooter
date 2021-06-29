@@ -22,6 +22,7 @@ public:
     QGraphicsScene* getScene() const;
 
 public slots:
+    void checkState();
     void checkPlayerActions();
     void spawnEnemyBullets();
     void spawnBullets();

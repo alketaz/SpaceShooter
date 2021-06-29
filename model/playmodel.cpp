@@ -52,3 +52,8 @@ void playModel::movePlayer(int x, int y){
 }
 
 void playModel::removeEnemy(unsigned int i) { enemies.erase(i);}
+
+bool playModel::enemiesCleared() const
+{
+    return enemies.size()==0;
+}

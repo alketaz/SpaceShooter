@@ -24,6 +24,7 @@ public:
     void damagePlayer(vettore<deep_ptr<spaceship>>::iterator);
     void movePlayer(int =0, int =0);
     void removeEnemy(unsigned int);
+    bool enemiesCleared() const;
 
 public slots:
     void updateEnemyPosition();

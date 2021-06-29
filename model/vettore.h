@@ -127,7 +127,8 @@ typename vettore<T>::iterator vettore<T>::iterator::operator++(int){
 
 template<class T>
 typename vettore<T>::iterator& vettore<T>::iterator::operator++(){
-    return ++punt;
+    ++punt;
+    return *this;
 }
 
 template<class T>
@@ -137,7 +138,8 @@ typename vettore<T>::iterator vettore<T>::iterator::operator--(int){
 
 template<class T>
 typename vettore<T>::iterator& vettore<T>::iterator::operator--(){
-    return --punt;
+    --punt;
+    return *this;
 }
 
 template<class T>

@@ -15,15 +15,22 @@ void playcontroller::tick(){
     QTimer* tick(new QTimer());
     tick->start(30);
     QTimer* bulletTick(new QTimer());
-    bulletTick->start(500);
+    bulletTick->start(750);
     QTimer* enemyBulletTick(new QTimer());
     enemyBulletTick->start(100);
-    //connect(tick, &QTimer::timeout, this, &playcontroller::checkGameState);
-    connect(tick, &QTimer::timeout, scene, &gameScene::checkCollisions);
+    connect(tick, &QTimer::timeout, this, &playcontroller::checkState);
+    connect(this, &playcontroller::checkPlayerActions, scene, &gameScene::checkCollisions);
     connect(tick, &QTimer::timeout, this, &playcontroller::checkPlayerActions);
     connect(bulletTick, &QTimer::timeout, this, &playcontroller::spawnBullets);
-    connect(enemyBulletTick, &QTimer::timeout, this, &playcontroller::spawnEnemyBullets);
-    //connect(tick, &QTimer::timeout, this, &playcontroller::checkCollisions);
+    connect(bulletTick, &QTimer::timeout, this, &playcontroller::spawnEnemyBullets);
+    //connect(enemyBulletTick, &QTimer::timeout, this, &playcontroller::spawnEnemyBullets);
+}
+
+
+void playcontroller::checkState()
+{
+    if(scene->enemiesCleared() && model->enemiesCleared())
+        emit scene->changeState();
 }
 
 void playcontroller::checkPlayerActions(){
@@ -33,6 +40,7 @@ void playcontroller::checkPlayerActions(){
         model->movePlayer(x,y);
         scene->updatePlayer(x,y);
     }
+    emit scene->checkCollisions();
 }
 
 void playcontroller::spawnBullets(){
@@ -42,8 +50,20 @@ void playcontroller::spawnBullets(){
 }
 
 void playcontroller::spawnEnemyBullets(){
-    bulletModel* bullet = new bulletModel(false);
-    unsigned int randEnemy = (rand()%(model->enemySize()));
-    bullet->setPos(scene->getEnemyBulletPos(randEnemy)[0], scene->getEnemyBulletPos(randEnemy)[1]);
-    scene->addItem(bullet);
+    unsigned int size = (model->enemySize()<5 ? model->enemySize() : 5);
+    unsigned int* shootingShips = new unsigned int[size];
+    for (int i=0; i < size; i++){
+        bulletModel* bullet = new bulletModel(false);
+        unsigned int randEnemy = (rand()%(model->enemySize()));
+        for(int j=0; j<i; j++){
+            if(randEnemy==shootingShips[j]){
+                ++randEnemy;
+                randEnemy = randEnemy%model->enemySize();
+                j--;
+            }
+        }
+        shootingShips[i]=randEnemy;
+        bullet->setPos(scene->getEnemyBulletPos(randEnemy)[0], scene->getEnemyBulletPos(randEnemy)[1]);
+        scene->addItem(bullet);
+    }
 }

@@ -41,6 +41,7 @@ public:
     int getEnemyByPos(int x, int y) const;
     unsigned int getEnemyHit() const;
     void checkCollisions();
+    bool enemiesCleared() const;
 
     int movePlayerX() const;
     int movePlayerY() const;
@@ -55,8 +56,8 @@ public:
     void updateMatch();*/
 
 public slots:
-    void enemiesCleared();
     void move();
+    void changeState();
     void updatePlayer(int, int);
 };
 

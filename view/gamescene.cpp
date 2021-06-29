@@ -83,29 +83,55 @@ unsigned int gameScene::getEnemyHit() const
 
 void gameScene::checkCollisions()
 {
+    qDebug() << "START CHECK";
     auto health_it = enemyHealth.begin();
     auto match_it = match->enemies.begin();
+    auto it = enemyItems.begin();
+    bool hit = false;
     unsigned int pos=0;
-    for(auto it= enemyItems.begin(); it!= enemyItems.end(); it++, health_it++, match_it++, pos++){
-        if((*it)->getHit()){
-            qDebug()<<"Element hit"<<(*it)->x() << (*it)->y();
-            match->damagePlayer(match_it);
-            (*it)->setHit(false);
-            if(match->getEnemyHealth(match_it)<=0){
-                removeItem(*it);
-                if(it == --enemyItems.end())
-                    enemyItems.pop_back();
-                else enemyItems.erase(it);
-                qDebug()<<"deleting element"<<(*it)->x() << (*it)->y();
-                removeItem(*health_it);
-                enemyHealth.erase(health_it);
-                match->enemies.erase(pos);
+    while(it!= enemyItems.end() && pos<enemyItems.size()){
+        if(hit){
+            auto h_it_copy = health_it;
+            auto m_it_copy = match_it;
+            auto it_copy = it;
+            --h_it_copy, --m_it_copy, --it_copy;
+            if(match->getEnemyHealth(m_it_copy)<=0){
+                removeItem(*it_copy);
+                enemyItems.erase(it_copy);
+                removeItem(*h_it_copy);
+                enemyHealth.erase(h_it_copy);
+                match->enemies.erase(pos-1);
             }
             else{
-                qDebug()<<"updating element"<<(*it)->x() << (*it)->y();
-                (*health_it)->updateHealth(7);
+                (*h_it_copy)->updateHealth(7);
             }
+            hit=false;
         }
+
+        qDebug() <<"pos"<< pos;
+        if((*it)->getHit()){
+            match->damagePlayer(match_it);
+            (*it)->setHit(false);
+            hit=true;
+        }
+        ++it, ++health_it, ++match_it, ++pos;
+    }
+    if(hit){
+        auto h_it_copy = health_it;
+        auto m_it_copy = match_it;
+        auto it_copy = it;
+        --h_it_copy, --m_it_copy, --it_copy;
+        if(match->getEnemyHealth(--match_it)<=0){
+            removeItem(*it_copy);
+            enemyItems.erase(it_copy);
+            removeItem(*h_it_copy);
+            enemyHealth.erase(h_it_copy);
+            match->enemies.erase(pos-1);
+        }
+        else{
+            (*h_it_copy)->updateHealth(7);
+        }
+        hit=false;
     }
 }
 
@@ -127,13 +153,17 @@ int* gameScene::getEnemyBulletPos(unsigned int i) const{
     bulletItems.push_back(b);
 }*/
 
-void gameScene::enemiesCleared(){
-    if(phase == gamePhase::base)
+bool gameScene::enemiesCleared() const{
+    return enemyItems.size()==0;
+}
+
+void gameScene::changeState(){
+    /*if(phase == gamePhase::base)
         phase = gamePhase::special;
     else if(phase == gamePhase::special)
         phase = gamePhase::final;
     else
-        phase = gamePhase::won;
+        phase = gamePhase::won;*/
     loadEnemies();
 }
 

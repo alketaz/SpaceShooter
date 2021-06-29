@@ -8,6 +8,7 @@ gameScene::gameScene(playModel* m): match(m), phase(gamePhase::base), enemyItems
     loadBG();
     //loadInfoBox();
     loadPlayer();
+    loadWave();
     loadEnemies();
 }
 
@@ -35,6 +36,18 @@ void gameScene::loadPlayer()
     hp->setPos(p->x(), p->y()+54);
     addItem(p);
     addItem(hp);
+}
+
+void gameScene::loadWave(){
+    QTimer* eTimer = new QTimer();
+    eTimer->setSingleShot(true);
+    eTimer->start(3000);
+
+    QPixmap text(":/img/fw.png");
+    QGraphicsPixmapItem* title = new QGraphicsPixmapItem(text);
+    title->setPos(match->getScreenW()/2 - text.width()/2, 200);
+    addItem(title);
+    connect(eTimer, &QTimer::timeout, this, [=](){emit removeItem(title);});
 }
 
 void gameScene::loadEnemies()

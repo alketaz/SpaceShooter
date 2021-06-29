@@ -34,6 +34,7 @@ public:
     void loadBG();
     void loadInfoBox();
     void loadPlayer();
+    void loadWave();
     void loadEnemies();
 
     int* getPlayerBulletPos() const;

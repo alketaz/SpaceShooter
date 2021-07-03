@@ -53,8 +53,8 @@ public:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
 
-/*signals:
-    void updateMatch();*/
+signals:
+    void gameWon();
 
 public slots:
     void move();

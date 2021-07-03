@@ -42,12 +42,25 @@ void gameScene::loadWave(){
     QTimer* eTimer = new QTimer();
     eTimer->setSingleShot(true);
     eTimer->start(3000);
-
-    QPixmap text(":/img/fw.png");
-    QGraphicsPixmapItem* title = new QGraphicsPixmapItem(text);
-    title->setPos(match->getScreenW()/2 - text.width()/2, 200);
-    addItem(title);
-    connect(eTimer, &QTimer::timeout, this, [=](){emit removeItem(title);});
+    QGraphicsPixmapItem* title;
+    if(phase == gamePhase::won){
+        QPixmap text(":/img/win.png");
+        QPixmap subtext(":/img/sub.png");
+        title = new QGraphicsPixmapItem(text);
+        QGraphicsPixmapItem* subtitle = new QGraphicsPixmapItem(subtext);
+        title->setPos(match->getScreenW()/2 - text.width()/2, 200);
+        subtitle->setPos(match->getScreenW()/2 - subtext.width()/2, 300);
+        addItem(title);
+        addItem(subtitle);
+        connect(eTimer, &QTimer::timeout, this, &gameScene::gameWon); //cambiare con reindirizzamento a menu
+    }
+    else{
+        QPixmap text(":/img/fw.png");
+        title = new QGraphicsPixmapItem(text);
+        title->setPos(match->getScreenW()/2 - text.width()/2, 200);
+        addItem(title);
+        connect(eTimer, &QTimer::timeout, this, [=](){emit removeItem(title);});
+    }
 }
 
 void gameScene::loadEnemies()
@@ -56,7 +69,7 @@ void gameScene::loadEnemies()
     case gamePhase::base:
         match->FirstWave();
         for(vettore<deep_ptr<spaceship>>::const_iterator cit = match->enemies.begin(); cit!=match->enemies.end(); cit++){
-            enemyModel* eM = new enemyModel(enemyType::base);
+            enemyModel* eM = new enemyModel(enemyType::special);
             healthBar* hB = new healthBar();
             eM->setPos((*cit)->getX(), (*cit)->getY());
             hB->setPos(eM->x(), eM->y()-42);
@@ -66,17 +79,30 @@ void gameScene::loadEnemies()
             addItem(hB);
         }
         break;
-    /*case gamePhase::special:
+    case gamePhase::special:
+        //match->secondWave();
+        for(vettore<deep_ptr<spaceship>>::const_iterator cit = match->enemies.begin(); cit!=match->enemies.end(); cit++){
+            enemyModel* eM;
+            if(typeid (**cit)== typeid (enemy))
+                eM = new enemyModel(enemyType::base);
+            /*if(typeid (**cit)== typeid (specialEnemy))
+                eM = new enemyModel(enemyType::special);*/
+            healthBar* hB = new healthBar();
+            eM->setPos((*cit)->getX(), (*cit)->getY());
+            hB->setPos(eM->x(), eM->y()-42);
+            enemyItems.push_back(eM);
+            enemyHealth.push_back(hB);
+            addItem(eM);
+            addItem(hB);
+        }
         break;
-    case gamePhase::final:
-        break;
-    case gamePhase::won:
+    /*case gamePhase::final:
         break;*/
     }
 }
 
 int gameScene::getEnemyByPos(int x, int y) const{
-    int pos;
+    unsigned int pos;
     for(pos = 0; pos<enemyItems.size(); pos++){
         if(enemyItems[pos]->x() == x && enemyItems[pos]->y()==y)
             return pos;
@@ -87,7 +113,7 @@ int gameScene::getEnemyByPos(int x, int y) const{
 
 unsigned int gameScene::getEnemyHit() const
 {
-    for( unsigned int f=0; f<bulletItems.size();f++){
+    for(int f=0; f<bulletItems.size();f++){
         if(bulletItems[f]->gotHit())
             return f;
     }
@@ -162,21 +188,18 @@ int* gameScene::getEnemyBulletPos(unsigned int i) const{
     return aux;
 }
 
-/*void gameScene::addToBulletVector(bulletModel* b){
-    bulletItems.push_back(b);
-}*/
-
 bool gameScene::enemiesCleared() const{
     return enemyItems.size()==0;
 }
 
 void gameScene::changeState(){
-    /*if(phase == gamePhase::base)
-        phase = gamePhase::special;
+    if(phase == gamePhase::base)
+        /*phase = gamePhase::special;
     else if(phase == gamePhase::special)
         phase = gamePhase::final;
-    else
-        phase = gamePhase::won;*/
+    else*/
+        phase = gamePhase::won;
+    loadWave();
     loadEnemies();
 }
 

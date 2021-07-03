@@ -7,6 +7,7 @@ playcontroller::playcontroller(): controller(), model(new playModel(1920,1080)),
     moveTimer->start(1200);
     connect(moveTimer, &QTimer::timeout, scene, &gameScene::move);
     connect(moveTimer, &QTimer::timeout, model, &playModel::updateEnemyPosition);
+    connect(scene, &gameScene::gameWon, this, [=](){emit sceneRequest(viewSelector::mainMenu);});
 }
 
 QGraphicsScene* playcontroller::getScene() const{return scene;}

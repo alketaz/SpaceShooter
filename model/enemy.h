@@ -5,7 +5,7 @@
 
 class enemy: public spaceship{  
 public:
-    enemy();
+    enemy(unsigned int =3, unsigned int =1);
 };
 
 #endif // ENEMY_H

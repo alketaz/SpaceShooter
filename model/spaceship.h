@@ -5,29 +5,31 @@
 class spaceship{
 private:
     unsigned int maxHP, hpLeft, dmg, row;
-    static unsigned int width, height;
+    static unsigned int width, height, hpRecovery;
     int x, y;
 
 public:
-    static double hpRecovery;
 
     spaceship(unsigned int, unsigned int);
     spaceship(const spaceship&);
     virtual ~spaceship() =default;
 
     //metodi
-    virtual unsigned int getSpaceshipWidth();
-    virtual unsigned int getSpaceshipHeight();
+    virtual unsigned int& getSpaceshipWidth() const;
+    virtual unsigned int& getSpaceshipHeight() const;
     void setX(int);
-    virtual const int& getX() const;
+    const int& getX() const;
     void setY(int);
-    virtual const int& getY() const;
-    void setRow(unsigned int);
-    const unsigned int& getRow() const;
+    const int& getY() const;
+    //spostare in enemy
+    virtual void setRow(unsigned int);
+    virtual const unsigned int& getRow() const;
+    //
     void decreaseHP(unsigned int);
-    const unsigned int& getMaxHP() const;
-    const unsigned int& getHP() const;
-    virtual unsigned int getDmg() const;
+    unsigned int& getMaxHP() const;
+    unsigned int& getHP() const;
+    void setDmg(unsigned int);
+    unsigned int getDmg() const;
 };
 
 #endif // SPACESHIP_H

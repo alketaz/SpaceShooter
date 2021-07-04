@@ -7,7 +7,7 @@ spaceship::spaceship(unsigned int h, unsigned int d): maxHP(h), hpLeft(h), dmg(d
 spaceship::spaceship(const spaceship& s): maxHP(s.maxHP), hpLeft(s.hpLeft), dmg(s.dmg), row(0), x(s.x), y(s.y) {}
 
 //static fields
-double spaceship::hpRecovery = 2;
+unsigned int spaceship::hpRecovery = 2;
 unsigned int spaceship::width = 64;
 unsigned int spaceship::height = 64;
 
@@ -25,14 +25,16 @@ void spaceship::setRow(unsigned int i){row = i;}
 const unsigned int& spaceship::getRow() const{return row;}
 
 
-unsigned int spaceship::getSpaceshipWidth(){return width;}
+unsigned int& spaceship::getSpaceshipWidth() const{return width;}
 
-unsigned int spaceship::getSpaceshipHeight(){return height;}
+unsigned int& spaceship::getSpaceshipHeight() const{return height;}
 
 void spaceship::decreaseHP(unsigned int i) {hpLeft -= i;}
 
 const unsigned int& spaceship::getMaxHP() const{return maxHP;}
 
 const unsigned int& spaceship::getHP() const{return hpLeft;}
+
+void spaceship::setDmg(unsigned int d) {dmg=d;}
 
 unsigned int spaceship::getDmg() const{return dmg;}

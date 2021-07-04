@@ -69,10 +69,10 @@ void gameScene::loadEnemies()
     case gamePhase::base:
         match->FirstWave();
         for(vettore<deep_ptr<spaceship>>::const_iterator cit = match->enemies.begin(); cit!=match->enemies.end(); cit++){
-            enemyModel* eM = new enemyModel(enemyType::special);
+            enemyModel* eM = new enemyModel(enemyType::base);
             healthBar* hB = new healthBar();
             eM->setPos((*cit)->getX(), (*cit)->getY());
-            hB->setPos(eM->x(), eM->y()-42);
+            hB->setPos(eM->x() + eM->getWidth()/2 - 32, eM->y()-42);
             enemyItems.push_back(eM);
             enemyHealth.push_back(hB);
             addItem(eM);

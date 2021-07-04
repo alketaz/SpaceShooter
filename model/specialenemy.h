@@ -6,10 +6,17 @@
 class specialEnemy : public enemy
 {
 private:
-    bool divideWhenDead;
-    bool superGun;
+    bool divideWhenDead, superGun;
+    static unsigned int width, height;
+
 public:
-    specialEnemy(bool =true);
+    specialEnemy(unsigned int =8, unsigned int =2, bool =true);
+
+    bool divides() const;
+
+    unsigned int& getSpaceshipWidth() const;
+    unsigned int& getSpaceshipHeight() const;
+
 };
 
 #endif // SPECIALENEMY_H

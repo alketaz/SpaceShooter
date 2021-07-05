@@ -1,6 +1,6 @@
 #include "gamescene.h"
 
-gameScene::gameScene(playModel* m): match(m), phase(gamePhase::base), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]) //, moveTimer(new QTimer())
+gameScene::gameScene(playModel* m): match(m), phase(gamePhase::special), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]) //, moveTimer(new QTimer())
 {
     for(int i=0;i<5;i++)
         playerActions[i]=false;
@@ -68,7 +68,7 @@ void gameScene::loadEnemies()
     switch(phase){
     case gamePhase::base:
         match->FirstWave();
-        for(vettore<deep_ptr<spaceship>>::const_iterator cit = match->enemies.begin(); cit!=match->enemies.end(); cit++){
+        for(auto cit = match->enemies.begin(); cit!=match->enemies.end(); cit++){
             enemyModel* eM = new enemyModel(enemyType::base);
             healthBar* hB = new healthBar();
             eM->setPos((*cit)->getX(), (*cit)->getY());
@@ -80,16 +80,17 @@ void gameScene::loadEnemies()
         }
         break;
     case gamePhase::special:
-        //match->secondWave();
-        for(vettore<deep_ptr<spaceship>>::const_iterator cit = match->enemies.begin(); cit!=match->enemies.end(); cit++){
+        match->SecondWave();
+        for(auto cit = match->enemies.begin(); cit!=match->enemies.end(); cit++){
             enemyModel* eM;
-            if(typeid (**cit)== typeid (enemy))
+            if(dynamic_cast<specialEnemy*>(cit->get())){
+                eM = new enemyModel(enemyType::special);
+            }
+            else
                 eM = new enemyModel(enemyType::base);
-            /*if(typeid (**cit)== typeid (specialEnemy))
-                eM = new enemyModel(enemyType::special);*/
             healthBar* hB = new healthBar();
             eM->setPos((*cit)->getX(), (*cit)->getY());
-            hB->setPos(eM->x(), eM->y()-42);
+            hB->setPos(eM->x() + eM->getWidth()/2 - 32, eM->y()-42);
             enemyItems.push_back(eM);
             enemyHealth.push_back(hB);
             addItem(eM);
@@ -122,7 +123,6 @@ unsigned int gameScene::getEnemyHit() const
 
 void gameScene::checkCollisions()
 {
-    qDebug() << "START CHECK";
     auto health_it = enemyHealth.begin();
     auto match_it = match->enemies.begin();
     auto it = enemyItems.begin();
@@ -147,7 +147,6 @@ void gameScene::checkCollisions()
             hit=false;
         }
 
-        qDebug() <<"pos"<< pos;
         if((*it)->getHit()){
             match->damagePlayer(match_it);
             (*it)->setHit(false);
@@ -194,9 +193,9 @@ bool gameScene::enemiesCleared() const{
 
 void gameScene::changeState(){
     if(phase == gamePhase::base)
-        /*phase = gamePhase::special;
+        phase = gamePhase::special;
     else if(phase == gamePhase::special)
-        phase = gamePhase::final;
+    /*    phase = gamePhase::final;
     else*/
         phase = gamePhase::won;
     loadWave();

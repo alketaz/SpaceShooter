@@ -6,6 +6,8 @@ player::player(unsigned int mhp, unsigned int mS): spaceship(mhp, 2), maxSpecial
 
 player::player(const player& p): spaceship(p.getMaxHP(), p.getDmg()), maxSpecial(p.maxSpecial), specialLeft(maxSpecial){}
 
+unsigned int player::hpRecovery = 4;
+
 //metodi
 void player::useSpecial(){
     if(specialLeft>0)
@@ -28,3 +30,8 @@ void player::heal(){
 }*/
 
 unsigned int player::getSpecial() const{return specialLeft;}
+
+player *player::clone() const
+{
+    return new player(*this);
+}

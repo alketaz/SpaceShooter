@@ -11,11 +11,14 @@ private:
 
 public:
     specialEnemy(unsigned int =8, unsigned int =2, bool =true);
+    specialEnemy(const specialEnemy&);
 
     bool divides() const;
 
     unsigned int& getSpaceshipWidth() const;
     unsigned int& getSpaceshipHeight() const;
+
+    specialEnemy* clone() const;
 
 };
 

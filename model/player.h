@@ -3,8 +3,8 @@
 #include "spaceship.h"
 class player: public spaceship{
 private:
-    unsigned int maxSpecial;
-    unsigned int specialLeft;
+    unsigned int maxSpecial, specialLeft;
+    static unsigned int hpRecovery;
 
 public:
     player(unsigned int =10, unsigned int =3);
@@ -16,6 +16,7 @@ public:
     void useSpecial();
     //void addSpecial();
     unsigned int getSpecial() const;
+    player* clone() const;
 };
 
 #endif // PLAYER_H

@@ -5,6 +5,7 @@
 #include "model/spaceship.h"
 #include "model/player.h"
 #include "model/enemy.h"
+#include "model/specialenemy.h"
 
 class playModel: public QObject
 {
@@ -17,6 +18,7 @@ private:
 public:
     playModel(unsigned int w =1920, unsigned int h =1080);
     void FirstWave();
+    void SecondWave();
     unsigned int enemySize() const;
     unsigned int getScreenW() const;
     unsigned int getScreenH() const;

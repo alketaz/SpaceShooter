@@ -2,7 +2,8 @@
 #include "model/vettore.h"
 #include <QDebug>
 
-playModel::playModel(unsigned int w, unsigned int h): enemies(), p(new player()), screen_w(w), screen_h(h){
+
+playModel::playModel(unsigned int w, unsigned int h): enemies(), p(new player), screen_w(w), screen_h(h){
     p->setX(screen_w/2-32);
     p->setY(screen_h-96);
 }
@@ -12,14 +13,29 @@ void playModel::FirstWave(){
     for(int i=0; i<24; i++){
         spaceship* ptr = new enemy();
         ptr->setX((screen_w/16-(ptr->getSpaceshipWidth()/2) + i*screen_w/8)%screen_w);
-        ptr->setRow(i/8);
-        ptr->setY(-(ptr->getSpaceshipHeight()+ptr->getRow()*ptr->getSpaceshipHeight()*2));
+        static_cast<enemy*>(ptr)->setRow(i/8);
+        ptr->setY(-(ptr->getSpaceshipHeight()+static_cast<enemy*>(ptr)->getRow()*ptr->getSpaceshipHeight()*2));
         aux.push_back(ptr);
     }
     enemies = aux;
 }
 
-
+void playModel::SecondWave(){
+    for(int i=0; i<8; i++){
+        enemy* ptr = new enemy();
+        ptr->setX((screen_w/16-(ptr->getSpaceshipWidth()/2) + i*screen_w/8)%screen_w);
+        static_cast<enemy*>(ptr)->setRow(0);
+        ptr->setY(-(ptr->getSpaceshipHeight()+static_cast<enemy*>(ptr)->getRow()*ptr->getSpaceshipHeight()*2));
+        enemies.push_back(ptr);
+    }
+    for(int i=0; i<3; i++){
+        specialEnemy* ptr = new specialEnemy();
+        ptr->setX((screen_w/6-(ptr->getSpaceshipWidth()/2) + i*screen_w/3)%screen_w);
+        static_cast<specialEnemy*>(ptr)->setRow(1);
+        ptr->setY(-(ptr->getSpaceshipHeight()+static_cast<specialEnemy*>(ptr)->getRow()*ptr->getSpaceshipHeight()));
+        enemies.push_back(ptr);
+    }
+}
 
 void playModel::updateEnemyPosition(){
     for(vettore<deep_ptr<spaceship>>::iterator it = enemies.begin(); it!=enemies.end();it++)

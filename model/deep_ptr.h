@@ -33,7 +33,7 @@ std::ostream& operator<<(std::ostream& os, const deep_ptr<T>& dp){
 #include "deep_ptr.h"
 
 template<class T>
-deep_ptr<T>::deep_ptr(T* t): info(t==nullptr ? nullptr : new T(*t)){}
+deep_ptr<T>::deep_ptr(T* t): info(t==nullptr ? nullptr : t->clone()){}
 
 template<class T>
 deep_ptr<T>::deep_ptr(const deep_ptr<T>& dp): info(dp.info==nullptr ? nullptr : new T(*(dp.info))){}
@@ -45,7 +45,7 @@ template<class T>
 deep_ptr<T>& deep_ptr<T>::operator=(const deep_ptr& dp){
     if(this!=&dp){
         delete info;
-        info = new T(*(dp.info));
+        info = dp.get()->clone();
     }
     return *this;
 }

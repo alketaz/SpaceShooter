@@ -33,11 +33,7 @@ void enemyModel::setSprite(unsigned int i){
 
 void enemyModel::setHit(bool b){hit = b;}
 
-bool enemyModel::getHit() const
-{
-    qDebug() << this;
-    return hit;
-}
+bool enemyModel::getHit() const {return hit;}
 
 void enemyModel::changeSprite(){
     spriteSel++;

@@ -4,8 +4,8 @@
 
 class spaceship{
 private:
-    unsigned int maxHP, hpLeft, dmg, row;
-    static unsigned int width, height, hpRecovery;
+    unsigned int maxHP, hpLeft, dmg;
+    static unsigned int width, height;
     int x, y;
 
 public:
@@ -21,15 +21,12 @@ public:
     const int& getX() const;
     void setY(int);
     const int& getY() const;
-    //spostare in enemy
-    virtual void setRow(unsigned int);
-    virtual const unsigned int& getRow() const;
-    //
     void decreaseHP(unsigned int);
-    unsigned int& getMaxHP() const;
-    unsigned int& getHP() const;
+    const unsigned int& getMaxHP() const;
+    const unsigned int& getHP() const;
     void setDmg(unsigned int);
     unsigned int getDmg() const;
+    virtual spaceship* clone() const =0;
 };
 
 #endif // SPACESHIP_H

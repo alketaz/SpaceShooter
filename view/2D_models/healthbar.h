@@ -15,6 +15,7 @@ public:
     healthBar();
 public slots:
     void updateHealth(unsigned int);
+    void restoreHealth();
 };
 
 #endif // HEALTHBAR_H

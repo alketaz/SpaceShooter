@@ -28,11 +28,13 @@ public:
     void movePlayer(int =0, int =0);
     void removeEnemy(unsigned int);
     bool enemiesCleared() const;
+    bool playerDead() const;
     spaceship* getEnemy(unsigned int i);
     player* getPlayerPtr();
 
 public slots:
     void updateEnemyPosition();
+    void healPlayer();
 };
 
 #endif // PLAYMODEL_H

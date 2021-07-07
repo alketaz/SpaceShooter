@@ -17,5 +17,13 @@ void healthBar::setSprite(unsigned int i){
 
 void healthBar::updateHealth(unsigned int i){
     spriteSel += i;
+    if(spriteSel>14)
+        spriteSel=14;
+    setSprite(spriteSel);
+}
+
+void healthBar::restoreHealth()
+{
+    spriteSel = 0;
     setSprite(spriteSel);
 }

@@ -10,6 +10,8 @@ bulletModel::bulletModel(bool b): timer(new QTimer()), playerBullet(b), dmg(0)
 
 void bulletModel::setDmg(unsigned int i) {dmg = i;}
 
+unsigned int bulletModel::getDmg() const {return dmg;}
+
 void bulletModel::move(){
     setPos(x(), (playerBullet? y()-12 : y()+12));
 
@@ -23,12 +25,15 @@ void bulletModel::move(){
         for(int i=0, n=impact.size(); i<n; i++){
             if(playerBullet && dynamic_cast<enemyModel*>(impact[i])){
                 scene()->removeItem(this);
-                hitShip = static_cast<enemyModel*>(impact[i]);
+                auto hitShip = static_cast<enemyModel*>(impact[i]);
                 hitShip->setHit(true);
                 delete this;
             }
             if(!playerBullet && typeid(*(impact[i]))==typeid(playerModel)){
                 scene()->removeItem(this);
+                auto hitShip = static_cast<playerModel*>(impact[i]);
+                hitShip->setHit(true);
+                hitShip->setDmg(dmg);
                 delete this;
             }
         }

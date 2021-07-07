@@ -1,6 +1,6 @@
 #include "playermodel.h"
 
-playerModel::playerModel(): updateTimer(new QTimer()), width(64), height(80), sprite(0)
+playerModel::playerModel(): updateTimer(new QTimer()), width(64), height(80), sprite(0), hit(false)
 {
     QPixmap ship1(":/img/user1.png");
     QPixmap ship2(":/img/user2.png");
@@ -27,3 +27,11 @@ void playerModel::changeSprite(){
 unsigned int playerModel::getWidth() const{return width;}
 
 unsigned int playerModel::getHeight() const{return height;}
+
+void playerModel::setHit(bool b) {hit=b;}
+
+bool playerModel::getHit() const {return hit;}
+
+void playerModel::setDmg(unsigned int i) {dmg = i;}
+
+bool playerModel::getDmg() const {return dmg;}

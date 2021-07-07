@@ -14,12 +14,12 @@ private:
     QTimer* timer;
     bool playerBullet;
     unsigned int dmg;
-    enemyModel* hitShip;
 
 public:
     bulletModel(bool);
     bool fromPlayer();
     void setDmg(unsigned int);
+    unsigned int getDmg() const;
     //enemyModel* gotHit();
 
 signals:

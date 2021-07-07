@@ -13,11 +13,19 @@ private:
     unsigned int spriteSel, width, height;
     std::vector<QPixmap> sprite;
     void setSprite(unsigned int =0);
+    unsigned int dmg;
+    bool hit;
+
 public:
     playerModel();
     //void keyPressEvent(QKeyEvent* event);
     unsigned int getWidth() const;
     unsigned int getHeight() const;
+    void setHit(bool);
+    bool getHit() const;
+    void setDmg(unsigned int);
+    bool getDmg() const;
+
 public slots:
     void changeSprite();
 };

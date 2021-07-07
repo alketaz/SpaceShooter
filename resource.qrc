@@ -16,6 +16,8 @@
         <file alias="sub.png">img/win_sub.png</file>
         <file alias="se">img/specialEnemy1.png</file>
         <file alias="mini">img/miniEnemy.png</file>
+        <file alias="again">img/again.png</file>
+        <file alias="loss">img/loss.png</file>
     </qresource>
     <qresource prefix="/style">
         <file alias="QPushButton.css">style/QPushButton.css</file>

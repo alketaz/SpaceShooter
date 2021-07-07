@@ -40,7 +40,9 @@ void playModel::SecondWave(){
 void playModel::updateEnemyPosition(){
     for(vettore<deep_ptr<spaceship>>::iterator it = enemies.begin(); it!=enemies.end();it++)
         (*it)->setY((*it)->getY()+16);
-};
+}
+
+void playModel::healPlayer() {p->heal();};
 
 unsigned int playModel::enemySize() const{return enemies.size();}
 
@@ -72,6 +74,8 @@ void playModel::movePlayer(int x, int y){
 void playModel::removeEnemy(unsigned int i) { enemies.erase(i);}
 
 bool playModel::enemiesCleared() const {return enemies.size()==0;}
+
+bool playModel::playerDead() const {return p->getHP()<=0;}
 
 spaceship* playModel::getEnemy(unsigned int i) {return enemies[i].get();}
 

@@ -12,6 +12,7 @@
 #include "view/2D_models/bulletmodel.h"
 #include "view/2D_models/healthbar.h"
 
+class playerModel;
 class bulletModel;
 class healthBar;
 
@@ -24,7 +25,7 @@ private:
     std::vector<enemyModel*> enemyItems;
     std::vector<healthBar*> enemyHealth;
     vettore<bulletModel*> bulletItems;
-    QGraphicsPixmapItem* p;
+    playerModel* p;
     healthBar* hp;
     bool* playerActions;
     //QTimer* moveTimer;
@@ -54,12 +55,13 @@ public:
     void keyReleaseEvent(QKeyEvent* event);
 
 signals:
-    void gameWon();
+    void gameEnd();
 
 public slots:
     void move();
     void changeState();
     void updatePlayer(int, int);
+    void healPlayer();
 };
 
 #endif // GAMESCENE_H

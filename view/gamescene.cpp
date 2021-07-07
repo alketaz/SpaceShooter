@@ -52,7 +52,18 @@ void gameScene::loadWave(){
         subtitle->setPos(match->getScreenW()/2 - subtext.width()/2, 300);
         addItem(title);
         addItem(subtitle);
-        connect(eTimer, &QTimer::timeout, this, &gameScene::gameWon); //cambiare con reindirizzamento a menu
+        connect(eTimer, &QTimer::timeout, this, &gameScene::gameEnd);
+    }
+    else if(phase == gamePhase::lost){
+        QPixmap text(":/img/loss");
+        QPixmap subtext(":/img/again");
+        title = new QGraphicsPixmapItem(text);
+        QGraphicsPixmapItem* subtitle = new QGraphicsPixmapItem(subtext);
+        title->setPos(match->getScreenW()/2 - text.width()/2, 200);
+        subtitle->setPos(match->getScreenW()/2 - subtext.width()/2, 300);
+        addItem(title);
+        addItem(subtitle);
+        connect(eTimer, &QTimer::timeout, this, &gameScene::gameEnd);
     }
     else{
         QPixmap text(":/img/fw.png");
@@ -118,6 +129,7 @@ void gameScene::checkCollisions()
     auto health_it = enemyHealth.begin();
     auto match_it = match->enemies.begin();
     auto it = enemyItems.begin();
+    player* pl = match->getPlayerPtr();
     bool hit = false;
     unsigned int pos=0;
     while(it!= enemyItems.end() && pos<enemyItems.size()){
@@ -206,7 +218,17 @@ void gameScene::checkCollisions()
         hit=false;
     }
 
-
+    if(p->getHit()){
+        p->setHit(false);
+        match->damagePlayer(p->getDmg());
+        hp->updateHealth(p->getDmg());
+        p->setDmg(0);
+        if(pl->getHP()<=0){
+            removeItem(p);
+            removeItem(hp);
+            phase = gamePhase::lost;
+        }
+    }
 }
 
 int* gameScene::getPlayerBulletPos() const{
@@ -228,12 +250,16 @@ bool gameScene::enemiesCleared() const{
 }
 
 void gameScene::changeState(){
-    if(phase == gamePhase::base)
-        phase = gamePhase::special;
-    else if(phase == gamePhase::special)
-    /*    phase = gamePhase::final;
-    else*/
-        phase = gamePhase::won;
+    if(phase!=gamePhase::lost){
+        healPlayer();
+        match->healPlayer();
+        if(phase == gamePhase::base)
+            phase = gamePhase::special;
+        else if(phase == gamePhase::special)
+        /*    phase = gamePhase::final;
+        else*/
+            phase = gamePhase::won;
+    }
     loadWave();
     loadEnemies();
 }
@@ -325,3 +351,5 @@ void gameScene::updatePlayer(int w, int h){
 
     hp->setPos(p->x(), p->y() + 54);
 }
+
+void gameScene::healPlayer(){hp->restoreHealth();}

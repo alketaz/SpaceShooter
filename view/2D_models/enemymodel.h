@@ -23,6 +23,7 @@ public:
     bool getHit() const;
     unsigned int getWidth() const;
     unsigned int getHeight() const;
+    enemyType getType() const;
 
 signals:
     void itemMoved();

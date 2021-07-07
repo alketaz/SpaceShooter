@@ -18,34 +18,6 @@ void playerModel::setSprite(unsigned int i){
     setPixmap(sprite[i].scaled(width,height));
 }
 
-/*void playerModel::keyPressEvent(QKeyEvent *event){
-    if(event->key() == Qt::Key_Left){
-        setPos(x()-16, y());
-        if(pos().x()<=0)
-            setPos(0, y());
-    }
-    else if(event->key() == Qt::Key_Right){
-        setPos(x()+16, y());
-        if(pos().x()+64>=scene()->width())
-            setPos(scene()->width()-64, y());
-    }
-    else if(event->key() == Qt::Key_Down){
-        setPos(x(), y()+16);
-        if(pos().y()+64>=scene()->height())
-            setPos(x(), scene()->height()-64);
-    }
-    else if(event->key() == Qt::Key_Up){
-        setPos(x(), y()-16);
-        if(pos().y()<=scene()->height()-256)
-            setPos(x(), scene()->height()-256);
-    }
-    else if(event->key() == Qt::Key_Space){
-        bulletModel* bullet = new bulletModel();
-        bullet->setPos(x()+30,y()-16);
-        scene()->addItem(bullet);
-    }
-}*/
-
 void playerModel::changeSprite(){
     spriteSel+=1;
     spriteSel%=3;

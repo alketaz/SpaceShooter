@@ -1,7 +1,7 @@
 #include "enemymodel.h"
 #include <QDebug>
 
-enemyModel::enemyModel(enemyType et): type(et), width(type==enemyType::base ? 64 : 256), height(type==enemyType::base ? 64 : 128), updateTimer(new QTimer()), hit(false)
+enemyModel::enemyModel(enemyType et): type(et), width(type==enemyType::special ? 256 : 64), height(type==enemyType::special ? 128 : 64), updateTimer(new QTimer()), hit(false)
 {
     if(type == enemyType::base){
         QPixmap ship1(":/img/enemy1.png");
@@ -10,6 +10,14 @@ enemyModel::enemyModel(enemyType et): type(et), width(type==enemyType::base ? 64
         sprite.push_back(ship1);
         sprite.push_back(ship2);
         sprite.push_back(ship3);
+    }
+    else if(type == enemyType::mini){
+        QPixmap img(":/img/mini");
+        for(int i=0; i<3; i++){
+            QRect crop(i*76,0,64,76);
+            QPixmap ship = img.copy(crop);
+            sprite.push_back(ship);
+        }
     }
     else if(type == enemyType::special){
         QPixmap img(":/img/se");
@@ -42,5 +50,7 @@ void enemyModel::changeSprite(){
 }
 
 unsigned int enemyModel::getHeight() const{return height;}
+
+enemyType enemyModel::getType() const {return type;}
 
 unsigned int enemyModel::getWidth() const{return width;}

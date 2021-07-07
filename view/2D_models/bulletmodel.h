@@ -13,12 +13,14 @@ class bulletModel : public QObject, public QGraphicsRectItem
 private:
     QTimer* timer;
     bool playerBullet;
+    unsigned int dmg;
     enemyModel* hitShip;
 
 public:
     bulletModel(bool);
     bool fromPlayer();
-    enemyModel* gotHit();
+    void setDmg(unsigned int);
+    //enemyModel* gotHit();
 
 signals:
     void enemyHit();

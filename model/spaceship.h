@@ -22,6 +22,7 @@ public:
     void setY(int);
     const int& getY() const;
     void decreaseHP(unsigned int);
+    void setMaxHP(unsigned int);
     const unsigned int& getMaxHP() const;
     const unsigned int& getHP() const;
     void setDmg(unsigned int);

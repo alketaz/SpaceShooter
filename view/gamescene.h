@@ -39,7 +39,7 @@ public:
 
     int* getPlayerBulletPos() const;
     int* getEnemyBulletPos(unsigned int) const;
-    int getEnemyByPos(int x, int y) const;
+    enemyModel* getEnemyByPos(unsigned int) const;
     unsigned int getEnemyHit() const;
     void checkCollisions();
     bool enemiesCleared() const;

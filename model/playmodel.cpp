@@ -50,7 +50,9 @@ unsigned int playModel::getScreenH()const{return screen_h;}
 
 int playModel::getEnemyHealth(vettore<deep_ptr<spaceship>>::iterator it) const {return (*it)->getHP();}
 
-void playModel::damagePlayer(vettore<deep_ptr<spaceship>>::iterator it){ (*it)->decreaseHP(2);}
+void playModel::damageEnemy(vettore<deep_ptr<spaceship>>::iterator it) { (*it)->decreaseHP(p->getDmg());}
+
+void playModel::damagePlayer(unsigned int i) {p->decreaseHP(i);}
 
 void playModel::movePlayer(int x, int y){
     p->setX(p->getX()+x); p->setX(p->getY()+y);
@@ -69,7 +71,10 @@ void playModel::movePlayer(int x, int y){
 
 void playModel::removeEnemy(unsigned int i) { enemies.erase(i);}
 
-bool playModel::enemiesCleared() const
-{
-    return enemies.size()==0;
-}
+bool playModel::enemiesCleared() const {return enemies.size()==0;}
+
+spaceship* playModel::getEnemy(unsigned int i) {return enemies[i].get();}
+
+player* playModel::getPlayerPtr() {return p.get();}
+
+

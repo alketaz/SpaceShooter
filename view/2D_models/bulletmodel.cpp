@@ -1,12 +1,14 @@
 #include "view/2D_models/bulletmodel.h"
 
-bulletModel::bulletModel(bool b): timer(new QTimer()), playerBullet(b)
+bulletModel::bulletModel(bool b): timer(new QTimer()), playerBullet(b), dmg(0)
 {
     setRect(0,0,4,16);
     setBrush(playerBullet ? Qt::red : Qt::green);
     connect(timer, &QTimer::timeout, this, [=](){emit move();});
     timer->start(30);
 }
+
+void bulletModel::setDmg(unsigned int i) {dmg = i;}
 
 void bulletModel::move(){
     setPos(x(), (playerBullet? y()-12 : y()+12));
@@ -33,4 +35,3 @@ void bulletModel::move(){
     }
 }
 
-enemyModel* bulletModel::gotHit(){return hitShip;}

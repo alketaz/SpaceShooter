@@ -51,7 +51,7 @@ void playcontroller::spawnBullets(){
 }
 
 void playcontroller::spawnEnemyBullets(){
-    unsigned int size = (model->enemySize()<5 ? model->enemySize() : 5);
+    unsigned int size = (model->enemySize()<5 ? model->enemySize()/2+1 : 5);
     unsigned int* shootingShips = new unsigned int[size];
     for (int i=0; i < size; i++){
         bulletModel* bullet = new bulletModel(false);
@@ -65,6 +65,9 @@ void playcontroller::spawnEnemyBullets(){
         }
         shootingShips[i]=randEnemy;
         bullet->setPos(scene->getEnemyBulletPos(randEnemy)[0], scene->getEnemyBulletPos(randEnemy)[1]);
+        spaceship* origin = model->getEnemy(randEnemy);
+        qDebug() << origin;
+        bullet->setDmg(origin->getDmg());
         scene->addItem(bullet);
     }
 }

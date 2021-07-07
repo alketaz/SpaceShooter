@@ -1,8 +1,10 @@
 #include "model/specialenemy.h"
 
 specialEnemy::specialEnemy(unsigned int h, unsigned int d, bool dWd): enemy(h,d), divideWhenDead(dWd), superGun(!dWd) {
-    if(!divideWhenDead)
+    if(!divideWhenDead){
         setDmg(d*2);
+        setMaxHP(getMaxHP()*2);
+    }
 }
 
 specialEnemy::specialEnemy(const specialEnemy& se):enemy(se), divideWhenDead(se.divideWhenDead), superGun(se.superGun){}

@@ -25,6 +25,8 @@ unsigned int& spaceship::getSpaceshipHeight() const{return height;}
 
 void spaceship::decreaseHP(unsigned int i) {hpLeft -= i;}
 
+void spaceship::setMaxHP(unsigned int i) {maxHP = i;}
+
 const unsigned int& spaceship::getMaxHP() const{return maxHP;}
 
 const unsigned int& spaceship::getHP() const{return hpLeft;}

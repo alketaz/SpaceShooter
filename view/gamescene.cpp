@@ -1,6 +1,6 @@
 #include "gamescene.h"
 
-gameScene::gameScene(playModel* m): match(m), phase(gamePhase::special), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]) //, moveTimer(new QTimer())
+gameScene::gameScene(playModel* m): match(m), phase(gamePhase::base), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]) //, moveTimer(new QTimer())
 {
     for(int i=0;i<5;i++)
         playerActions[i]=false;
@@ -102,24 +102,16 @@ void gameScene::loadEnemies()
     }
 }
 
-int gameScene::getEnemyByPos(int x, int y) const{
-    unsigned int pos;
-    for(pos = 0; pos<enemyItems.size(); pos++){
-        if(enemyItems[pos]->x() == x && enemyItems[pos]->y()==y)
-            return pos;
-    }
-    pos = 999999;
-    return pos;
-}
+enemyModel* gameScene::getEnemyByPos(unsigned int i) const {return enemyItems[i];}
 
-unsigned int gameScene::getEnemyHit() const
+/*unsigned int gameScene::getEnemyHit() const
 {
     for(int f=0; f<bulletItems.size();f++){
         if(bulletItems[f]->gotHit())
             return f;
     }
     return 999999;
-}
+}*/
 
 void gameScene::checkCollisions()
 {
@@ -135,6 +127,22 @@ void gameScene::checkCollisions()
             auto it_copy = it;
             --h_it_copy, --m_it_copy, --it_copy;
             if(match->getEnemyHealth(m_it_copy)<=0){
+                if(typeid(**m_it_copy) == typeid (specialEnemy) && static_cast<specialEnemy*>(m_it_copy->get())->divides()){
+                    for(int i=0; i<2; i++){
+                        enemy* e = new enemy();
+                        e->setX((*m_it_copy)->getX() + i*((*m_it_copy)->getSpaceshipWidth() - e->getSpaceshipWidth()));
+                        e->setY((*m_it_copy)->getY());
+                        enemyModel* eM = new enemyModel(enemyType::mini);
+                        eM->setPos(e->getX(), e->getY());
+                        healthBar* hB = new healthBar();
+                        hB->setPos(eM->x() + eM->getWidth()/2 - 32, eM->y()-42);
+                        match->enemies.push_back(e);
+                        enemyItems.push_back(eM);
+                        enemyHealth.push_back(hB);
+                        addItem(eM);
+                        addItem(hB);
+                    }
+                }
                 removeItem(*it_copy);
                 enemyItems.erase(it_copy);
                 removeItem(*h_it_copy);
@@ -142,13 +150,18 @@ void gameScene::checkCollisions()
                 match->enemies.erase(pos-1);
             }
             else{
-                (*h_it_copy)->updateHealth(7);
+                if(typeid (enemy) == typeid (**m_it_copy))
+                    (*h_it_copy)->updateHealth(7);
+                else if(typeid (specialEnemy) == typeid (**m_it_copy))
+                    (*h_it_copy)->updateHealth(4);
+                /*else if(typeid (specialEnemy) == typeid (**match_it))
+                    (*h_it_copy)->updateHealth(2); */
             }
             hit=false;
         }
 
         if((*it)->getHit()){
-            match->damagePlayer(match_it);
+            match->damageEnemy(match_it);
             (*it)->setHit(false);
             hit=true;
         }
@@ -160,6 +173,22 @@ void gameScene::checkCollisions()
         auto it_copy = it;
         --h_it_copy, --m_it_copy, --it_copy;
         if(match->getEnemyHealth(--match_it)<=0){
+            if(typeid(**m_it_copy) == typeid (specialEnemy) && static_cast<specialEnemy*>(m_it_copy->get())->divides()){
+                for(int i=0; i<2; i++){
+                    enemy* e = new enemy();
+                    e->setX((*m_it_copy)->getX() + i*((*m_it_copy)->getSpaceshipWidth() - e->getSpaceshipWidth()));
+                    e->setY((*m_it_copy)->getY());
+                    enemyModel* eM = new enemyModel(enemyType::mini);
+                    eM->setPos(e->getX(), e->getY());
+                    healthBar* hB = new healthBar();
+                    hB->setPos(eM->x() + eM->getWidth()/2 - 32, eM->y()-42);
+                    match->enemies.push_back(e);
+                    enemyItems.push_back(eM);
+                    enemyHealth.push_back(hB);
+                    addItem(eM);
+                    addItem(hB);
+                }
+            }
             removeItem(*it_copy);
             enemyItems.erase(it_copy);
             removeItem(*h_it_copy);
@@ -167,10 +196,17 @@ void gameScene::checkCollisions()
             match->enemies.erase(pos-1);
         }
         else{
-            (*h_it_copy)->updateHealth(7);
+            if(typeid (enemy) == typeid (**m_it_copy))
+                (*h_it_copy)->updateHealth(7);
+            else if(typeid (specialEnemy) == typeid (**m_it_copy))
+                (*h_it_copy)->updateHealth(4);
+            /*else if(typeid (specialEnemy) == typeid (**match_it))
+                (*h_it_copy)->updateHealth(2); */
         }
         hit=false;
     }
+
+
 }
 
 int* gameScene::getPlayerBulletPos() const{

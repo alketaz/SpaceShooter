@@ -23,10 +23,13 @@ public:
     unsigned int getScreenW() const;
     unsigned int getScreenH() const;
     int getEnemyHealth(vettore<deep_ptr<spaceship>>::iterator) const;
-    void damagePlayer(vettore<deep_ptr<spaceship>>::iterator);
+    void damageEnemy(vettore<deep_ptr<spaceship>>::iterator);
+    void damagePlayer(unsigned int);
     void movePlayer(int =0, int =0);
     void removeEnemy(unsigned int);
     bool enemiesCleared() const;
+    spaceship* getEnemy(unsigned int i);
+    player* getPlayerPtr();
 
 public slots:
     void updateEnemyPosition();

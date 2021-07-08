@@ -15,7 +15,7 @@ void player::useSpecial(){
         throw std::exception(); //Rimpiazzare eccezione
 }
 
-void player::heal(){const_cast<unsigned int&>(getHP())=getMaxHP();}
+void player::heal(){const_cast<int&>(getHP())=getMaxHP();}
 
 /*void player::addSpecial(){
     if(specialLeft<maxSpecial)

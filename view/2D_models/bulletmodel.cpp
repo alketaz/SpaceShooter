@@ -4,8 +4,6 @@ bulletModel::bulletModel(bool b): timer(new QTimer()), playerBullet(b), dmg(0)
 {
     setRect(0,0,4,16);
     setBrush(playerBullet ? Qt::red : Qt::green);
-    connect(timer, &QTimer::timeout, this, [=](){emit move();});
-    timer->start(30);
 }
 
 void bulletModel::setDmg(unsigned int i) {dmg = i;}
@@ -22,7 +20,7 @@ void bulletModel::move(){
 
     else{
         QList<QGraphicsItem*> impact = collidingItems();
-        for(int i=0, n=impact.size(); i<n; i++){
+        for(int i=0; i<impact.size(); i++){
             if(playerBullet && dynamic_cast<enemyModel*>(impact[i])){
                 scene()->removeItem(this);
                 auto hitShip = static_cast<enemyModel*>(impact[i]);

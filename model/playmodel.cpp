@@ -37,6 +37,11 @@ void playModel::SecondWave(){
     }
 }
 
+/*void playModel::FinalWave()
+{
+    for(int i=0; i<6)
+}*/
+
 void playModel::updateEnemyPosition(){
     for(vettore<deep_ptr<spaceship>>::iterator it = enemies.begin(); it!=enemies.end();it++)
         (*it)->setY((*it)->getY()+16);
@@ -49,6 +54,10 @@ unsigned int playModel::enemySize() const{return enemies.size();}
 unsigned int playModel::getScreenW()const{return screen_w;}
 
 unsigned int playModel::getScreenH()const{return screen_h;}
+
+vettore<deep_ptr<spaceship>>& playModel::getVettore() {return enemies;}
+
+const vettore<deep_ptr<spaceship>>& playModel::getVettore() const {return enemies;}
 
 int playModel::getEnemyHealth(vettore<deep_ptr<spaceship>>::iterator it) const {return (*it)->getHP();}
 

@@ -12,10 +12,9 @@ private:
     gameScene* scene;
     playModel* model;
     QTimer* moveTimer;
-
-    void tick();
-
-signals:
+    QTimer* tick;
+    QTimer* bulletTick;
+    QTimer* enemyBulletTick;
 
 public:
     playcontroller();

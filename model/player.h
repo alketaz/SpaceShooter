@@ -7,7 +7,7 @@ private:
     static unsigned int hpRecovery;
 
 public:
-    player(unsigned int =10, unsigned int =2);
+    player(unsigned int =14, unsigned int =2);
     player(const player &);
     ~player() =default;
     player& operator=(const player&);

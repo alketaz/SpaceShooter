@@ -9,7 +9,7 @@
 
 class playModel: public QObject
 {
-friend class gameScene;
+//friend class gameScene;
 private:
     vettore<deep_ptr<spaceship>> enemies;
     deep_ptr<player> p;
@@ -19,9 +19,14 @@ public:
     playModel(unsigned int w =1920, unsigned int h =1080);
     void FirstWave();
     void SecondWave();
+    void FinalWave();
     unsigned int enemySize() const;
     unsigned int getScreenW() const;
     unsigned int getScreenH() const;
+
+    vettore<deep_ptr<spaceship>>& getVettore();
+    const vettore<deep_ptr<spaceship>>& getVettore() const;
+
     int getEnemyHealth(vettore<deep_ptr<spaceship>>::iterator) const;
     void damageEnemy(vettore<deep_ptr<spaceship>>::iterator);
     void damagePlayer(unsigned int);

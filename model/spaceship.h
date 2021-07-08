@@ -4,9 +4,9 @@
 
 class spaceship{
 private:
-    unsigned int maxHP, hpLeft, dmg;
+    unsigned int maxHP, dmg;
     static unsigned int width, height;
-    int x, y;
+    int hpLeft, x, y;
 
 public:
 
@@ -24,7 +24,7 @@ public:
     void decreaseHP(unsigned int);
     void setMaxHP(unsigned int);
     const unsigned int& getMaxHP() const;
-    const unsigned int& getHP() const;
+    const int& getHP() const;
     void setDmg(unsigned int);
     unsigned int getDmg() const;
     virtual spaceship* clone() const =0;

@@ -24,7 +24,7 @@ public:
     void setHit(bool);
     bool getHit() const;
     void setDmg(unsigned int);
-    bool getDmg() const;
+    unsigned int getDmg() const;
 
 public slots:
     void changeSprite();

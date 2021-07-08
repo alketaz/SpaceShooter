@@ -1,15 +1,17 @@
 #include "gamescene.h"
 
-gameScene::gameScene(playModel* m): match(m), phase(gamePhase::base), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]) //, moveTimer(new QTimer())
+gameScene::gameScene(playModel* m): match(m), phase(gamePhase::special), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]) //, moveTimer(new QTimer())
 {
     for(int i=0;i<5;i++)
         playerActions[i]=false;
     setSceneRect(0,0,m->getScreenW(),m->getScreenH());
     loadBG();
+    //loadMisc();
     //loadInfoBox();
     loadPlayer();
     loadWave();
     loadEnemies();
+    //connect(this, &gameScene::stopBullets, this, &gameScene::pauseMenu);
 }
 
 void gameScene::loadBG()
@@ -44,6 +46,7 @@ void gameScene::loadWave(){
     eTimer->start(3000);
     QGraphicsPixmapItem* title;
     if(phase == gamePhase::won){
+        emit stopBullets();
         QPixmap text(":/img/win.png");
         QPixmap subtext(":/img/sub.png");
         title = new QGraphicsPixmapItem(text);
@@ -55,6 +58,7 @@ void gameScene::loadWave(){
         connect(eTimer, &QTimer::timeout, this, &gameScene::gameEnd);
     }
     else if(phase == gamePhase::lost){
+        emit stopBullets();
         QPixmap text(":/img/loss");
         QPixmap subtext(":/img/again");
         title = new QGraphicsPixmapItem(text);
@@ -79,7 +83,7 @@ void gameScene::loadEnemies()
     switch(phase){
     case gamePhase::base:
         match->FirstWave();
-        for(auto cit = match->enemies.begin(); cit!=match->enemies.end(); cit++){
+        for(auto cit = match->getVettore().begin(); cit!=match->getVettore().end(); cit++){
             enemyModel* eM = new enemyModel(enemyType::base);
             healthBar* hB = new healthBar();
             eM->setPos((*cit)->getX(), (*cit)->getY());
@@ -92,9 +96,9 @@ void gameScene::loadEnemies()
         break;
     case gamePhase::special:
         match->SecondWave();
-        for(auto cit = match->enemies.begin(); cit!=match->enemies.end(); cit++){
+        for(auto cit = match->getVettore().begin(); cit!=match->getVettore().end(); cit++){
             enemyModel* eM;
-            if(dynamic_cast<specialEnemy*>(cit->get())){
+            if(dynamic_cast<const specialEnemy*>(cit->get())){
                 eM = new enemyModel(enemyType::special);
             }
             else
@@ -109,25 +113,22 @@ void gameScene::loadEnemies()
         }
         break;
     /*case gamePhase::final:
+        match->FinalWave();
+        enemyModel* eM = new enemyModel(enemyType::final);
+        eM->setPos(width()/2 - eM->getWidth()/2, );
+        for(unsigned int i=0; i<5; i++){
+            healthBar* hB
+        }
         break;*/
     }
 }
 
-enemyModel* gameScene::getEnemyByPos(unsigned int i) const {return enemyItems[i];}
-
-/*unsigned int gameScene::getEnemyHit() const
-{
-    for(int f=0; f<bulletItems.size();f++){
-        if(bulletItems[f]->gotHit())
-            return f;
-    }
-    return 999999;
-}*/
+//enemyModel* gameScene::getEnemyByPos(unsigned int i) const {return enemyItems[i];}
 
 void gameScene::checkCollisions()
 {
     auto health_it = enemyHealth.begin();
-    auto match_it = match->enemies.begin();
+    auto match_it = match->getVettore().begin();
     auto it = enemyItems.begin();
     player* pl = match->getPlayerPtr();
     bool hit = false;
@@ -148,7 +149,7 @@ void gameScene::checkCollisions()
                         eM->setPos(e->getX(), e->getY());
                         healthBar* hB = new healthBar();
                         hB->setPos(eM->x() + eM->getWidth()/2 - 32, eM->y()-42);
-                        match->enemies.push_back(e);
+                        match->getVettore().push_back(e);
                         enemyItems.push_back(eM);
                         enemyHealth.push_back(hB);
                         addItem(eM);
@@ -159,7 +160,7 @@ void gameScene::checkCollisions()
                 enemyItems.erase(it_copy);
                 removeItem(*h_it_copy);
                 enemyHealth.erase(h_it_copy);
-                match->enemies.erase(pos-1);
+                match->getVettore().erase(pos-1);
             }
             else{
                 if(typeid (enemy) == typeid (**m_it_copy))
@@ -194,7 +195,7 @@ void gameScene::checkCollisions()
                     eM->setPos(e->getX(), e->getY());
                     healthBar* hB = new healthBar();
                     hB->setPos(eM->x() + eM->getWidth()/2 - 32, eM->y()-42);
-                    match->enemies.push_back(e);
+                    match->getVettore().push_back(e);
                     enemyItems.push_back(eM);
                     enemyHealth.push_back(hB);
                     addItem(eM);
@@ -205,7 +206,7 @@ void gameScene::checkCollisions()
             enemyItems.erase(it_copy);
             removeItem(*h_it_copy);
             enemyHealth.erase(h_it_copy);
-            match->enemies.erase(pos-1);
+            match->getVettore().erase(pos-1);
         }
         else{
             if(typeid (enemy) == typeid (**m_it_copy))
@@ -248,7 +249,6 @@ int* gameScene::getEnemyBulletPos(unsigned int i) const{
 bool gameScene::enemiesCleared() const{
     return enemyItems.size()==0;
 }
-
 void gameScene::changeState(){
     if(phase!=gamePhase::lost){
         healPlayer();
@@ -271,26 +271,40 @@ void gameScene::move(){
         (*it)->setPos((*it)->x(), (*it)->y()+16);
 }
 
-int gameScene::movePlayerX() const{
-    int res =0;
-    if(playerActions[0])
-        res-=8;
-    if(playerActions[2])
-        res+=8;
-    return res;
+int gameScene::movePlayerX(){
+    QList<QGraphicsItem*> impact = collidingItems(p);
+    for(unsigned int i = 0; i<impact.size(); i++){
+        if(p && dynamic_cast<enemyModel*>(impact[i])){
+            p->setHit(true);
+            p->setDmg(1);
+        }
+    }
+    if(p){
+        int res =0;
+        if(playerActions[0])
+            res-=8;
+        if(playerActions[2])
+            res+=8;
+        return res;
+    }
 }
 
-int gameScene::movePlayerY() const{
-    int res =0;
-    if(playerActions[1])
-        res-=8;
-    if(playerActions[3])
-        res+=8;
-    return res;
-}
-
-bool gameScene::spawnBullet() const{
-    return playerActions[4];
+int gameScene::movePlayerY(){
+    QList<QGraphicsItem*> impact = collidingItems(p);
+    for(unsigned int i = 0; i<impact.size(); i++){
+        if(p && dynamic_cast<enemyModel*>(impact[i])){
+            p->setHit(true);
+            p->setDmg(1);
+        }
+    }
+    if(p){
+        int res =0;
+        if(playerActions[1])
+            res-=8;
+        if(playerActions[3])
+            res+=8;
+        return res;
+    }
 }
 
 void gameScene::removeEnemy(unsigned int i){ std::vector<enemyModel*>::iterator it; enemyItems.erase(it+i); match->removeEnemy(i);}
@@ -309,8 +323,12 @@ void gameScene::keyPressEvent(QKeyEvent* event){
     case Qt::Key_Down:
         playerActions[3] = true;
     break;
-    case Qt::Key_Space:
-        playerActions[4] = true;
+    case Qt::Key_Escape:
+        playerActions[4] = !playerActions[4];
+        if(playerActions[4])
+            emit stopBullets();
+        else
+            emit resume();
     break;
     }
 }
@@ -353,3 +371,11 @@ void gameScene::updatePlayer(int w, int h){
 }
 
 void gameScene::healPlayer(){hp->restoreHealth();}
+
+/*void gameScene::pauseMenu()
+{
+    if(menu.isVisible())
+        menu.setVisible(false);
+    else
+        menu.setVisible(true);
+}*/

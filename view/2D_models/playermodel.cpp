@@ -34,4 +34,4 @@ bool playerModel::getHit() const {return hit;}
 
 void playerModel::setDmg(unsigned int i) {dmg = i;}
 
-bool playerModel::getDmg() const {return dmg;}
+unsigned int playerModel::getDmg() const {return dmg;}

@@ -24,11 +24,10 @@ private:
     gamePhase phase;
     std::vector<enemyModel*> enemyItems;
     std::vector<healthBar*> enemyHealth;
-    vettore<bulletModel*> bulletItems;
+    //vettore<bulletModel*> bulletItems;
     playerModel* p;
     healthBar* hp;
     bool* playerActions;
-    //QTimer* moveTimer;
 
 public:
     gameScene(playModel*);
@@ -40,15 +39,16 @@ public:
 
     int* getPlayerBulletPos() const;
     int* getEnemyBulletPos(unsigned int) const;
-    enemyModel* getEnemyByPos(unsigned int) const;
-    unsigned int getEnemyHit() const;
+    //enemyModel* getEnemyByPos(unsigned int) const;
+    //unsigned int getEnemyHit() const;
     void checkCollisions();
     bool enemiesCleared() const;
+    //void checkPause();
 
-    int movePlayerX() const;
-    int movePlayerY() const;
-    bool spawnBullet() const;
-    void addToBulletVector(bulletModel*);
+    int movePlayerX();
+    int movePlayerY();
+    //bool spawnBullet() const;
+    //void addToBulletVector(bulletModel*);
     void removeEnemy(unsigned int);
 
     void keyPressEvent(QKeyEvent* event);
@@ -56,12 +56,15 @@ public:
 
 signals:
     void gameEnd();
+    void stopBullets();
+    void resume();
 
 public slots:
     void move();
     void changeState();
     void updatePlayer(int, int);
     void healPlayer();
+    //void pauseMenu();
 };
 
 #endif // GAMESCENE_H

@@ -18,6 +18,8 @@
         <file alias="mini">img/miniEnemy.png</file>
         <file alias="again">img/again.png</file>
         <file alias="loss">img/loss.png</file>
+        <file alias="final">img/final.png</file>
+        <file alias="shieldBar">img/shieldBar.png</file>
     </qresource>
     <qresource prefix="/style">
         <file alias="QPushButton.css">style/QPushButton.css</file>

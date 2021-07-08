@@ -1,6 +1,6 @@
 #include "gamescene.h"
 
-gameScene::gameScene(playModel* m): match(m), phase(gamePhase::special), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]) //, moveTimer(new QTimer())
+gameScene::gameScene(playModel* m): match(m), phase(gamePhase::final), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]) //, moveTimer(new QTimer())
 {
     for(int i=0;i<5;i++)
         playerActions[i]=false;
@@ -112,14 +112,21 @@ void gameScene::loadEnemies()
             addItem(hB);
         }
         break;
-    /*case gamePhase::final:
+    case gamePhase::final:
         match->FinalWave();
         enemyModel* eM = new enemyModel(enemyType::final);
-        eM->setPos(width()/2 - eM->getWidth()/2, );
-        for(unsigned int i=0; i<5; i++){
-            healthBar* hB
-        }
-        break;*/
+        eM->setPos((*match->getVettore().begin())->getX(), (*match->getVettore().begin())->getY());
+        healthBar* hB = new healthBar();
+        healthBar* sB = new healthBar(true);
+        hB->setPos(eM->x() + eM->getWidth()/2 + 16, eM->y() - 52);
+        sB->setPos(eM->x() + eM->getWidth()/2 - 80, eM->y() - 52);
+        enemyItems.push_back(eM);
+        enemyHealth.push_back(hB);
+        enemyHealth.push_back(sB);
+        addItem(eM);
+        addItem(hB);
+        addItem(sB);
+        break;
     }
 }
 
@@ -256,8 +263,8 @@ void gameScene::changeState(){
         if(phase == gamePhase::base)
             phase = gamePhase::special;
         else if(phase == gamePhase::special)
-        /*    phase = gamePhase::final;
-        else*/
+            phase = gamePhase::final;
+        else
             phase = gamePhase::won;
     }
     loadWave();

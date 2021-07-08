@@ -1,7 +1,7 @@
 #include "enemymodel.h"
 #include <QDebug>
 
-enemyModel::enemyModel(enemyType et): type(et), width(type==enemyType::special ? 256 : 64), height(type==enemyType::special ? 128 : 64), updateTimer(new QTimer()), hit(false)
+enemyModel::enemyModel(enemyType et): type(et), width(type==enemyType::final ? 512 : (type==enemyType::special ? 256 : 64)), height(type==enemyType::final ? 256 : (type==enemyType::special ? 128 : 64)), updateTimer(new QTimer()), hit(false)
 {
     if(type == enemyType::base){
         QPixmap ship1(":/img/enemy1.png");
@@ -27,10 +27,15 @@ enemyModel::enemyModel(enemyType et): type(et), width(type==enemyType::special ?
             sprite.push_back(ship);
         }
     }
-    /*else if(type == enemyType::final){
-
-    }*/
-    setSprite(rand()%3);
+    else if(type == enemyType::final){
+        QPixmap img(":/img/final");
+        for(int i=0; i<4; i++){
+            QRect crop(0,i*512,1024,512);
+            QPixmap ship = img.copy(crop);
+            sprite.push_back(ship);
+        }
+    }
+    setSprite(rand()%sprite.size());
     updateTimer->start(200);
     connect(updateTimer, &QTimer::timeout, this, &enemyModel::changeSprite);
 }

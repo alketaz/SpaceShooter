@@ -6,6 +6,7 @@
 #include "model/player.h"
 #include "model/enemy.h"
 #include "model/specialenemy.h"
+#include "model/finalenemy.h"
 
 class playModel: public QObject
 {

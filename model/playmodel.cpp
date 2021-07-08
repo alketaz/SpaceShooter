@@ -37,10 +37,13 @@ void playModel::SecondWave(){
     }
 }
 
-/*void playModel::FinalWave()
+void playModel::FinalWave()
 {
-    for(int i=0; i<6)
-}*/
+    finalEnemy* ptr = new finalEnemy();
+    ptr->setX(screen_w/2 - ptr->getSpaceshipWidth()/2);
+    ptr->setY(-ptr->getSpaceshipHeight());
+    enemies.push_back(ptr);
+}
 
 void playModel::updateEnemyPosition(){
     for(vettore<deep_ptr<spaceship>>::iterator it = enemies.begin(); it!=enemies.end();it++)

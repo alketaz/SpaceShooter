@@ -12,7 +12,7 @@ private:
     unsigned int spriteSel;
     void setSprite(unsigned int =0);
 public:
-    healthBar();
+    healthBar(bool =false);
 public slots:
     void updateHealth(unsigned int);
     void restoreHealth();

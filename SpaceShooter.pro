@@ -15,6 +15,7 @@ SOURCES += \
     model/deep_ptr.cpp \
     main.cpp \
     model/enemy.cpp \
+    model/finalenemy.cpp \
     model/player.cpp \
     model/spaceship.cpp \
     model/specialenemy.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     model/deep_ptr.h \
     model/enemy.h \
     model/enumClasses.h \
+    model/finalenemy.h \
     model/gamephase.h \
     model/player.h \
     model/spaceship.h \

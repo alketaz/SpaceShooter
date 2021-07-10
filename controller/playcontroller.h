@@ -15,6 +15,7 @@ private:
     QTimer* tick;
     QTimer* bulletTick;
     QTimer* enemyBulletTick;
+    bool acceptRefill;
 
 public:
     playcontroller();
@@ -27,6 +28,7 @@ public slots:
     void spawnBullets();
     void healPlayer();
     void shieldCooldown();
+    void enableRefill();
 };
 
 #endif // PLAYCONTROLLER_H

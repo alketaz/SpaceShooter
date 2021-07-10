@@ -29,6 +29,8 @@ void spaceship::setMaxHP(unsigned int i) {maxHP = i;}
 
 const unsigned int& spaceship::getMaxHP() const{return maxHP;}
 
+void spaceship::setHP(int i) {hpLeft=i;}
+
 const int& spaceship::getHP() const{return hpLeft;}
 
 void spaceship::setDmg(unsigned int d) {dmg=d;}

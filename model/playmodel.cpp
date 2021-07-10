@@ -76,9 +76,15 @@ void playModel::damageEnemy(vettore<deep_ptr<spaceship>>::iterator it) {
     if(typeid (**it) == typeid (finalEnemy)){
         finalEnemy* ptr = static_cast<finalEnemy*>(it->get());
         if(ptr->getShield()>0)
+        {
             ptr->decreaseShield(p->getDmg());
+            qDebug()<<"shield left:"<<ptr->getShield();
+        }
         else
+        {
             ptr->decreaseHP(p->getDmg());
+            qDebug()<<"hp left:"<<ptr->getHP();
+        }
     }
     else
         (*it)->decreaseHP(p->getDmg());

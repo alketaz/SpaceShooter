@@ -24,6 +24,7 @@ public:
     void decreaseHP(unsigned int);
     void setMaxHP(unsigned int);
     const unsigned int& getMaxHP() const;
+    void setHP(int);
     const int& getHP() const;
     void setDmg(unsigned int);
     unsigned int getDmg() const;

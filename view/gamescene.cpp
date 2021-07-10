@@ -1,6 +1,6 @@
 #include "gamescene.h"
 
-gameScene::gameScene(playModel* m): match(m), phase(gamePhase::final), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]) //, moveTimer(new QTimer())
+gameScene::gameScene(playModel* m): match(m), phase(gamePhase::base), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]) //, moveTimer(new QTimer())
 {
     for(int i=0;i<5;i++)
         playerActions[i]=false;
@@ -69,8 +69,22 @@ void gameScene::loadWave(){
         addItem(subtitle);
         connect(eTimer, &QTimer::timeout, this, &gameScene::gameEnd);
     }
-    else{
-        QPixmap text(":/img/fw.png");
+    else if(phase == gamePhase::base){
+        QPixmap text(":/img/fw");
+        title = new QGraphicsPixmapItem(text);
+        title->setPos(match->getScreenW()/2 - text.width()/2, 200);
+        addItem(title);
+        connect(eTimer, &QTimer::timeout, this, [=](){emit removeItem(title);});
+    }
+    else if(phase == gamePhase::special){
+        QPixmap text(":/img/sw");
+        title = new QGraphicsPixmapItem(text);
+        title->setPos(match->getScreenW()/2 - text.width()/2, 200);
+        addItem(title);
+        connect(eTimer, &QTimer::timeout, this, [=](){emit removeItem(title);});
+    }
+    else if(phase == gamePhase::final){
+        QPixmap text(":/img/finalw");
         title = new QGraphicsPixmapItem(text);
         title->setPos(match->getScreenW()/2 - text.width()/2, 200);
         addItem(title);
@@ -146,7 +160,6 @@ void gameScene::checkCollisions()
             auto m_it_copy = match_it;
             auto it_copy = it;
             --h_it_copy, --m_it_copy, --it_copy;
-            qDebug()<<match->getEnemyHealth(m_it_copy);
             if(match->getEnemyHealth(m_it_copy)<=0){
                 if(typeid(**m_it_copy) == typeid (specialEnemy) && static_cast<specialEnemy*>(m_it_copy->get())->divides()){
                     for(int i=0; i<2; i++){
@@ -170,7 +183,7 @@ void gameScene::checkCollisions()
                 enemyHealth.erase(h_it_copy);
                 match->getVettore().erase(pos-1);
             }
-            else{
+            /*else{
                 if(typeid (enemy) == typeid (**m_it_copy))
                     (*h_it_copy)->updateHealth(7);
                 else if(typeid (specialEnemy) == typeid (**m_it_copy))
@@ -179,16 +192,25 @@ void gameScene::checkCollisions()
                     (*h_it_copy)->updateHealth(2);
                 else if(typeid (finalEnemy) == typeid (**m_it_copy) && static_cast<finalEnemy*>(m_it_copy->get())->getShield()<=0)
                     (*(++h_it_copy))->updateHealth(1);
-            }
+            }*/
             hit=false;
         }
 
         if((*it)->getHit()){
+            if(typeid (enemy) == typeid (**match_it))
+                (*health_it)->updateHealth(7);
+            else if(typeid (specialEnemy) == typeid (**match_it))
+                (*health_it)->updateHealth(4);
+            else if(typeid (finalEnemy) == typeid (**match_it) && static_cast<finalEnemy*>(match_it->get())->getShield()>0)
+                (*health_it)->updateHealth(2);
+            else if(typeid (finalEnemy) == typeid (**match_it) && static_cast<finalEnemy*>(match_it->get())->getShield()<=0)
+            {
+                (*(++health_it))->updateHealth(1);
+                emit shieldDown();
+            }
             match->damageEnemy(match_it);
             (*it)->setHit(false);
             hit=true;
-            if(typeid (finalEnemy) == typeid(**match_it) && (static_cast<finalEnemy*>(match_it->get())->getShield()<=0))
-                emit shieldDown();
         }
         ++it, ++health_it, ++match_it, ++pos;
     }
@@ -197,7 +219,6 @@ void gameScene::checkCollisions()
         auto m_it_copy = match_it;
         auto it_copy = it;
         --h_it_copy, --m_it_copy, --it_copy;
-        qDebug()<<match->getEnemyHealth(m_it_copy);
         if(match->getEnemyHealth(m_it_copy)<=0){
             if(typeid(**m_it_copy) == typeid (specialEnemy) && static_cast<specialEnemy*>(m_it_copy->get())->divides()){
                 for(int i=0; i<2; i++){
@@ -220,10 +241,10 @@ void gameScene::checkCollisions()
             removeItem(*h_it_copy);
             enemyHealth.erase(h_it_copy);
             if(typeid (**m_it_copy) == typeid (finalEnemy))
-                removeItem(*health_it);
+                removeItem(*(--h_it_copy));
             match->getVettore().erase(pos-1);
         }
-        else{
+        /*else{
             if(typeid (enemy) == typeid (**m_it_copy))
                 (*h_it_copy)->updateHealth(7);
             else if(typeid (specialEnemy) == typeid (**m_it_copy))
@@ -232,7 +253,7 @@ void gameScene::checkCollisions()
                 (*h_it_copy)->updateHealth(2);
             else if(typeid (finalEnemy) == typeid (**m_it_copy) && static_cast<finalEnemy*>(m_it_copy->get())->getShield()<=0)
                 (*(++h_it_copy))->updateHealth(1);
-        }
+        }*/
         hit=false;
     }
 
@@ -290,7 +311,7 @@ void gameScene::move(){
 
 int gameScene::movePlayerX(){
     QList<QGraphicsItem*> impact = collidingItems(p);
-    for(unsigned int i = 0; i<impact.size(); i++){
+    for(int i = 0; i<impact.size(); i++){
         if(p && dynamic_cast<enemyModel*>(impact[i])){
             p->setHit(true);
             p->setDmg(1);
@@ -304,11 +325,12 @@ int gameScene::movePlayerX(){
             res+=8;
         return res;
     }
+    return 0;
 }
 
 int gameScene::movePlayerY(){
     QList<QGraphicsItem*> impact = collidingItems(p);
-    for(unsigned int i = 0; i<impact.size(); i++){
+    for(int i = 0; i<impact.size(); i++){
         if(p && dynamic_cast<enemyModel*>(impact[i])){
             p->setHit(true);
             p->setDmg(1);
@@ -322,6 +344,7 @@ int gameScene::movePlayerY(){
             res+=8;
         return res;
     }
+    return 0;
 }
 
 void gameScene::removeEnemy(unsigned int i){ std::vector<enemyModel*>::iterator it; enemyItems.erase(it+i); match->removeEnemy(i);}

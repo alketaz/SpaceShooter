@@ -1,6 +1,6 @@
 #include "playcontroller.h"
 
-playcontroller::playcontroller(): controller(), model(new playModel(1920,1080)), moveTimer(new QTimer()), tick(new QTimer()), bulletTick(new QTimer()), enemyBulletTick(new QTimer())
+playcontroller::playcontroller(): controller(), model(new playModel(1920,1080)), moveTimer(new QTimer()), tick(new QTimer()), bulletTick(new QTimer()), enemyBulletTick(new QTimer()), acceptRefill(true)
 {
     scene = new gameScene(model);
     moveTimer->start(1200);
@@ -60,12 +60,18 @@ void playcontroller::healPlayer(){model->healPlayer();}
 
 void playcontroller::shieldCooldown()
 {
-    QTimer* timer = new QTimer();
-    timer->setSingleShot(true);
-    timer->start(3000);
-    connect(timer, &QTimer::timeout, model, &playModel::shieldCooldown);
-    connect(timer, &QTimer::timeout, scene, &gameScene::refillShield);
+    if(acceptRefill){
+        acceptRefill=false;
+        QTimer* timer = new QTimer();
+        timer->setSingleShot(true);
+        timer->start(3000);
+        connect(timer, &QTimer::timeout, model, &playModel::shieldCooldown);
+        connect(timer, &QTimer::timeout, scene, &gameScene::refillShield);
+        connect(timer, &QTimer::timeout, this, &playcontroller::enableRefill);
+    }
 }
+
+void playcontroller::enableRefill() {acceptRefill=true;}
 
 void playcontroller::spawnEnemyBullets(){
     unsigned int size = (model->enemySize()<5 ? model->enemySize()/2+1 : 5);

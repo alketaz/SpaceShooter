@@ -4,6 +4,7 @@ specialEnemy::specialEnemy(unsigned int h, unsigned int d, bool dWd): enemy(h,d)
     if(!divideWhenDead){
         setDmg(d*2);
         setMaxHP(getMaxHP()*2);
+        setHP(getMaxHP());
     }
 }
 

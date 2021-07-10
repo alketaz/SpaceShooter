@@ -27,6 +27,7 @@ void healthBar::setSprite(unsigned int i){
 }
 
 void healthBar::updateHealth(unsigned int i){
+    qDebug() << "sprite: "<<spriteSel<<" -> "<<spriteSel+i;
     spriteSel += i;
     if(spriteSel>14)
         spriteSel=14;

@@ -11,7 +11,9 @@
         <file alias="enemy2.png">img/baseEnemy2.png</file>
         <file alias="enemy3.png">img/baseEnemy3.png</file>
         <file alias="healthBar.png">img/healthBar.png</file>
-        <file alias="fw.png">img/first_w.png</file>
+        <file alias="fw">img/first_w.png</file>
+        <file alias="sw">img/sw.png</file>
+        <file alias="finalw">img/finalw.png</file>
         <file alias="win.png">img/win.png</file>
         <file alias="sub.png">img/win_sub.png</file>
         <file alias="se">img/specialEnemy1.png</file>
@@ -20,8 +22,5 @@
         <file alias="loss">img/loss.png</file>
         <file alias="final">img/final.png</file>
         <file alias="shieldBar">img/shieldBar.png</file>
-    </qresource>
-    <qresource prefix="/style">
-        <file alias="QPushButton.css">style/QPushButton.css</file>
     </qresource>
 </RCC>

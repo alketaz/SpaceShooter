@@ -12,7 +12,7 @@ private:
     static unsigned int width, height;
 
 public:
-    finalEnemy(unsigned int =30, unsigned int =2, unsigned int =15);
+    finalEnemy(unsigned int =14, unsigned int =2, unsigned int =14);
     finalEnemy(const finalEnemy&);
     finalEnemy* clone() const;
 

@@ -11,15 +11,15 @@
 class bulletModel : public QObject, public QGraphicsRectItem
 {
 private:
-    QTimer* timer;
     bool playerBullet;
     unsigned int dmg;
 
 public:
     bulletModel(bool);
-    bool fromPlayer();
+    bulletModel(const bulletModel&);
     void setDmg(unsigned int);
     unsigned int getDmg() const;
+    bool getDir() const;
     //enemyModel* gotHit();
 
 signals:

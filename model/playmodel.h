@@ -41,6 +41,7 @@ public:
 public slots:
     void updateEnemyPosition();
     void healPlayer();
+    void shieldCooldown();
 };
 
 #endif // PLAYMODEL_H

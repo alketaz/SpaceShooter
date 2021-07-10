@@ -1,6 +1,12 @@
 #include "view/2D_models/bulletmodel.h"
 
-bulletModel::bulletModel(bool b): timer(new QTimer()), playerBullet(b), dmg(0)
+bulletModel::bulletModel(bool b): playerBullet(b), dmg(0)
+{
+    setRect(0,0,4,16);
+    setBrush(playerBullet ? Qt::red : Qt::green);
+}
+
+bulletModel::bulletModel(const bulletModel & b): QObject(), QGraphicsRectItem(), playerBullet(b.playerBullet), dmg(b.dmg)
 {
     setRect(0,0,4,16);
     setBrush(playerBullet ? Qt::red : Qt::green);
@@ -9,6 +15,8 @@ bulletModel::bulletModel(bool b): timer(new QTimer()), playerBullet(b), dmg(0)
 void bulletModel::setDmg(unsigned int i) {dmg = i;}
 
 unsigned int bulletModel::getDmg() const {return dmg;}
+
+bool bulletModel::getDir() const {return playerBullet;}
 
 void bulletModel::move(){
     setPos(x(), (playerBullet? y()-12 : y()+12));

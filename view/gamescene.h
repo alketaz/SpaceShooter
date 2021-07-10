@@ -58,12 +58,14 @@ signals:
     void gameEnd();
     void stopBullets();
     void resume();
+    void shieldDown();
 
 public slots:
     void move();
     void changeState();
     void updatePlayer(int, int);
     void healPlayer();
+    void refillShield();
     //void pauseMenu();
 };
 

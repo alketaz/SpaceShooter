@@ -50,7 +50,15 @@ void playModel::updateEnemyPosition(){
         (*it)->setY((*it)->getY()+16);
 }
 
-void playModel::healPlayer() {p->heal();};
+void playModel::healPlayer() {p->heal();}
+
+void playModel::shieldCooldown()
+{
+    for(auto it = enemies.begin(); it!= enemies.end(); it++){
+        if(typeid (finalEnemy) == typeid (**it))
+            static_cast<finalEnemy*>(it->get())->refillShield();
+    }
+};
 
 unsigned int playModel::enemySize() const{return enemies.size();}
 
@@ -64,7 +72,17 @@ const vettore<deep_ptr<spaceship>>& playModel::getVettore() const {return enemie
 
 int playModel::getEnemyHealth(vettore<deep_ptr<spaceship>>::iterator it) const {return (*it)->getHP();}
 
-void playModel::damageEnemy(vettore<deep_ptr<spaceship>>::iterator it) { (*it)->decreaseHP(p->getDmg());}
+void playModel::damageEnemy(vettore<deep_ptr<spaceship>>::iterator it) {
+    if(typeid (**it) == typeid (finalEnemy)){
+        finalEnemy* ptr = static_cast<finalEnemy*>(it->get());
+        if(ptr->getShield()>0)
+            ptr->decreaseShield(p->getDmg());
+        else
+            ptr->decreaseHP(p->getDmg());
+    }
+    else
+        (*it)->decreaseHP(p->getDmg());
+}
 
 void playModel::damagePlayer(unsigned int i) {p->decreaseHP(i);}
 

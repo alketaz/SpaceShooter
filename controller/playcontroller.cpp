@@ -25,6 +25,7 @@ playcontroller::playcontroller(): controller(), model(new playModel(1920,1080)),
     connect(scene, &gameScene::resume, bulletTick, [=](){bulletTick->start();});
     connect(scene, &gameScene::resume, moveTimer, [=](){moveTimer->start();});
     connect(scene, &gameScene::resume, enemyBulletTick, [=](){enemyBulletTick->start();});
+    connect(scene, &gameScene::shieldDown, this, &playcontroller::shieldCooldown);
     connect(scene, &gameScene::gameEnd, this, [=](){emit sceneRequest(viewSelector::mainMenu);});
     //connect(this, &playcontroller::checkPlayerActions, scene, &gameScene::checkCollisions);
 }
@@ -57,6 +58,15 @@ void playcontroller::spawnBullets(){
 
 void playcontroller::healPlayer(){model->healPlayer();}
 
+void playcontroller::shieldCooldown()
+{
+    QTimer* timer = new QTimer();
+    timer->setSingleShot(true);
+    timer->start(3000);
+    connect(timer, &QTimer::timeout, model, &playModel::shieldCooldown);
+    connect(timer, &QTimer::timeout, scene, &gameScene::refillShield);
+}
+
 void playcontroller::spawnEnemyBullets(){
     unsigned int size = (model->enemySize()<5 ? model->enemySize()/2+1 : 5);
     unsigned int* shootingShips = new unsigned int[size];
@@ -72,9 +82,30 @@ void playcontroller::spawnEnemyBullets(){
         }
         shootingShips[i]=randEnemy;
         bullet->setPos(scene->getEnemyBulletPos(randEnemy)[0], scene->getEnemyBulletPos(randEnemy)[1]);
-        spaceship* origin = model->getEnemy(randEnemy);
+        spaceship* origin = model->getEnemy(randEnemy)->clone();
         bullet->setDmg(origin->getDmg());
+        if(typeid (finalEnemy) == typeid (*origin)){
+            for(int i=1; i<12; i++){
+                if(i==6) i++;
+                if(rand()%2==1){
+                    bulletModel* aux = new bulletModel(*bullet);
+                    aux->setPos(origin->getX() + i*origin->getSpaceshipWidth()/12, bullet->y());
+                    scene->addItem(aux);
+                    connect(tick, &QTimer::timeout, aux, &bulletModel::move);
+                }
+            }
+        }
+        else if(typeid (specialEnemy) == typeid (*origin)){
+            for(int i=1; i<6; i++){
+                if(i==2) i=5;
+                bulletModel* aux = new bulletModel(*bullet);
+                aux->setPos(origin->getX() + i*origin->getSpaceshipWidth()/6, bullet->y());
+                scene->addItem(aux);
+                connect(tick, &QTimer::timeout, aux, &bulletModel::move);
+            }
+        }
         scene->addItem(bullet);
+        delete origin;
         connect(tick, &QTimer::timeout, bullet, &bulletModel::move);
     }
 }

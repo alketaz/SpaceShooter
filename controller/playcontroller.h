@@ -26,6 +26,7 @@ public slots:
     void spawnEnemyBullets();
     void spawnBullets();
     void healPlayer();
+    void shieldCooldown();
 };
 
 #endif // PLAYCONTROLLER_H

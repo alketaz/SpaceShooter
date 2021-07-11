@@ -26,10 +26,10 @@ void MainWindow::updateScene(viewSelector v){
         break;
         case viewSelector::playScene:
             contr = new playcontroller();
-        /*break;
+        break;
         case viewSelector::tutorialScene:
-            contr = new tutorialcontroler();
-        break;*/
+            contr = new tutorialcontroller();
+        break;
     }
 
     connect(contr, &controller::sceneRequest, this, &MainWindow::updateScene);

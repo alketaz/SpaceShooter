@@ -1,15 +1,22 @@
 #include "gamescene.h"
 
-gameScene::gameScene(playModel* m): match(m), phase(gamePhase::base), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5])
+gameScene::gameScene(playModel* m): match(m), phase(gamePhase::base), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]), menuText(QPixmap(":/img/pause")), menuButton(QPixmap(":/img/menu"))
 {
     for(int i=0;i<5;i++)
         playerActions[i]=false;
-    setSceneRect(0,0,m->getScreenW(),m->getScreenH());
+    setSceneRect(0,0,1920,1080);
+    menuButton.setPos(width()/2-128, 400);
+    menuButton.setVisible(false);
+    addItem(&menuButton);
+    menuText.setPos(width()/2-394, 600);
+    menuText.setVisible(false);
+    addItem(&menuText);
     loadBG();
     //loadMisc();
     loadPlayer();
     loadWave();
     loadEnemies();
+    //connect(menuButton, &QGraphicsPixmapItem::clicked)
 }
 
 void gameScene::loadBG()
@@ -330,10 +337,20 @@ void gameScene::keyPressEvent(QKeyEvent* event){
     break;
     case Qt::Key_Escape:
         playerActions[4] = !playerActions[4];
-        if(playerActions[4])
+        if(playerActions[4]){
             emit stopBullets();
-        else
+            menuButton.setVisible(true);
+            menuText.setVisible(true);
+            QBrush brush(QColor::fromRgbF(10,10,10,0.20));
+            setForegroundBrush(brush);
+        }
+        else{
             emit resume();
+            menuButton.setVisible(false);
+            menuText.setVisible(false);
+            QBrush brush(QColor::fromRgbF(10,10,10,0));
+            setForegroundBrush(brush);
+        }
     break;
     }
 }

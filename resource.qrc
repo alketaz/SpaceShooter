@@ -22,5 +22,11 @@
         <file alias="loss">img/loss.png</file>
         <file alias="final">img/final.png</file>
         <file alias="shieldBar">img/shieldBar.png</file>
+        <file alias="exit">img/exit.png</file>
+        <file alias="play">img/play.png</file>
+        <file alias="tutorial">img/tutorial.png</file>
+        <file alias="menu">img/menu.png</file>
+        <file alias="pause">img/pause.png</file>
+        <file alias="arrows">img/arrows.png</file>
     </qresource>
 </RCC>

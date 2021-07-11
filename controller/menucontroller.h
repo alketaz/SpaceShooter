@@ -11,7 +11,7 @@ private:
     mainmenu* scene;
 public:
     explicit menucontroller();
-    QGraphicsScene* getScene() const override;
+    QGraphicsScene* getScene() const;
 };
 
 #endif // MENUCONTROLLER_H

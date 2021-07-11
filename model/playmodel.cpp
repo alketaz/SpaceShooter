@@ -2,8 +2,10 @@
 #include "model/vettore.h"
 #include <QDebug>
 
+unsigned int playModel::screen_w = 1920;
+unsigned int playModel::screen_h = 1080;
 
-playModel::playModel(unsigned int w, unsigned int h): enemies(), p(new player), screen_w(w), screen_h(h){
+playModel::playModel(): enemies(), p(new player){
     p->setX(screen_w/2-32);
     p->setY(screen_h-96);
 }

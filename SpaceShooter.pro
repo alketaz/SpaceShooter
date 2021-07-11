@@ -12,6 +12,7 @@ SOURCES += \
     controller/controller.cpp \
     controller/menucontroller.cpp \
     controller/playcontroller.cpp \
+    controller/tutorialcontroller.cpp \
     model/deep_ptr.cpp \
     main.cpp \
     model/enemy.cpp \
@@ -28,13 +29,15 @@ SOURCES += \
     view/gamescene.cpp \
     view/mainmenu.cpp \
     view/mainwindow.cpp \
-    view/mainwindowview.cpp
+    view/mainwindowview.cpp \
+    view/tutorialscene.cpp
 
 
 HEADERS += \
     controller/controller.h \
     controller/menucontroller.h \
     controller/playcontroller.h \
+    controller/tutorialcontroller.h \
     model/deep_ptr.h \
     model/enemy.h \
     model/enumClasses.h \
@@ -53,6 +56,7 @@ HEADERS += \
     view/mainmenu.h \
     view/mainwindow.h \
     view/mainwindowview.h \
+    view/tutorialscene.h \
     view/viewSelector.h
 
 FORMS += \

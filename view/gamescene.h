@@ -28,6 +28,9 @@ private:
     playerModel* p;
     healthBar* hp;
     bool* playerActions;
+    //QGraphicsPixmapItem menuButton;
+    QGraphicsPixmapItem menuText;
+    QGraphicsPixmapItem menuButton;
 
 public:
     gameScene(playModel*);

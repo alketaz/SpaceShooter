@@ -1,6 +1,6 @@
 #include "playcontroller.h"
 
-playcontroller::playcontroller(): controller(), model(new playModel(1920,1080)), moveTimer(new QTimer()), tick(new QTimer()), bulletTick(new QTimer()), enemyBulletTick(new QTimer()), acceptRefill(true)
+playcontroller::playcontroller(): controller(), model(new playModel()), moveTimer(new QTimer()), tick(new QTimer()), bulletTick(new QTimer()), enemyBulletTick(new QTimer()), acceptRefill(true)
 {
     scene = new gameScene(model);
     moveTimer->start(1200);

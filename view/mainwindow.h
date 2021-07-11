@@ -7,6 +7,7 @@
 #include "controller/controller.h"
 #include "controller/menucontroller.h"
 #include "controller/playcontroller.h"
+#include "controller/tutorialcontroller.h"
 #include "viewSelector.h"
 #include <QCloseEvent>
 

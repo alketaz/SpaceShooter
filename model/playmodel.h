@@ -14,10 +14,10 @@ class playModel: public QObject
 private:
     vettore<deep_ptr<spaceship>> enemies;
     deep_ptr<player> p;
-    unsigned int screen_w, screen_h;
+    static unsigned int screen_w, screen_h; //dimensioni rendering
 
 public:
-    playModel(unsigned int w =1280, unsigned int h =720);
+    playModel();
     void FirstWave();
     void SecondWave();
     void FinalWave();

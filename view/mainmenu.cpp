@@ -3,14 +3,15 @@
 mainmenu::mainmenu()
 {
     setSceneRect(0,0,1920,1080);
+    itemsBoundingRect();
     loadBackground();
     loadTitle();
     loadButtons();
 }
 
 void mainmenu::loadBackground(){
-    QPixmap bg(":/img/bg.jpg");
-    bg = bg.scaled(sceneRect().width(),sceneRect().height(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+    QPixmap bg(":/img/game_bg.png");
+    //bg = bg.scaled(sceneRect().width(),sceneRect().height(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
     QBrush brush(bg);
     setBackgroundBrush(brush);
 }
@@ -20,13 +21,13 @@ void mainmenu::loadTitle() {
     QGraphicsPixmapItem* title = new QGraphicsPixmapItem(QPixmap::fromImage(image));
     int w = image.width();
     int h = image.height();
-    title->setPos((sceneRect().width()-w)/2, (sceneRect().height()-h)/4);
+    title->setPos((width()-w)/2, (height()-h)/4);
     addItem(title);
 }
 
 void mainmenu::loadButtons() {
     QPushButton* playbtn = new QPushButton("Gioca");
-    playbtn->setGeometry(sceneRect().width()/2-90, sceneRect().height()/2, 180, 90);
+    playbtn->setGeometry(width()/2-90, height()/2, 180, 90);
     playbtn->setStyleSheet("QPushButton {color: orange;"
                            "font-size: 20px;"
                            "font-weight: bold;"
@@ -41,7 +42,7 @@ void mainmenu::loadButtons() {
     addWidget(playbtn);
 
     QPushButton* tutorialbtn = new QPushButton("Tutorial");
-    tutorialbtn->setGeometry(sceneRect().width()/2-90, sceneRect().height()/2+110, 180, 90);
+    tutorialbtn->setGeometry(width()/2-90, height()/2+110, 180, 90);
     tutorialbtn->setStyleSheet("QPushButton {color: orange;"
                                "font-size: 20px;"
                                "font-weight: bold;"
@@ -56,7 +57,7 @@ void mainmenu::loadButtons() {
     addWidget(tutorialbtn);
 
     QPushButton* exitbtn = new QPushButton("Esci");
-    exitbtn->setGeometry(sceneRect().width()/2-90, sceneRect().height()/2+220, 180, 90);
+    exitbtn->setGeometry(width()/2-90, height()/2+220, 180, 90);
     exitbtn->setStyleSheet("QPushButton {color: orange;"
                            "font-size: 20px;"
                            "font-weight: bold;"
@@ -71,7 +72,6 @@ void mainmenu::loadButtons() {
     addWidget(exitbtn);
 
     connect(playbtn, &QPushButton::clicked, this, &mainmenu::onPlayPressed);
-    /*connect(tutorialbtn, &QPushButton::clicked, this, &mainmenu::onTutorialPressed);
-    connect(optionbtn, &QPushButton::clicked, this, &mainmenu::onOptionsPressed);*/
+    connect(tutorialbtn, &QPushButton::clicked, this, &mainmenu::onTutorialPressed);
     connect(exitbtn, &QPushButton::clicked, this, &QApplication::exit);    //ulteriore schermata per uscire
 }

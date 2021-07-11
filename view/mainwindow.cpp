@@ -10,8 +10,8 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), view(new mainwindo
     QIcon icon(":/img/icon.png");
     setWindowIcon(icon);
 
-    setMinimumSize(QSize(1280, 720));
-    resize(QSize(1920,1080));
+    setMinimumSize(QSize(1024, 480));
+    resize(QSize(1280,720));
     setCentralWidget(view);
     updateScene(viewSelector::mainMenu);
 }
@@ -28,10 +28,7 @@ void MainWindow::updateScene(viewSelector v){
             contr = new playcontroller();
         /*break;
         case viewSelector::tutorialScene:
-            contr= new tutorialcontroler();
-        break;
-        case viewSelector::optionsScene:
-            contr = new optionscontroller();
+            contr = new tutorialcontroler();
         break;*/
     }
 

@@ -7,7 +7,7 @@
 
 template <class T>
 class vettore{
-    friend class iterator;
+    //friend class iterator;
 private:
     int cap;
     int sze;
@@ -21,8 +21,8 @@ public:
     vettore<T>& operator=(const vettore<T>&);
 
     class iterator{
-        friend class const_iterator;
-        friend class vettore;
+        //friend class const_iterator;
+        //friend class vettore;
     private:
         T* punt;
     public:

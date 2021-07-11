@@ -21,13 +21,12 @@ playcontroller::playcontroller(): controller(), model(new playModel(1920,1080)),
     connect(scene, &gameScene::stopBullets, bulletTick, &QTimer::stop);
     connect(scene, &gameScene::stopBullets, moveTimer, &QTimer::stop);
     connect(scene, &gameScene::stopBullets, enemyBulletTick, &QTimer::stop);
-    connect(scene, &gameScene::resume, tick, [=](){tick->start();});
-    connect(scene, &gameScene::resume, bulletTick, [=](){bulletTick->start();});
-    connect(scene, &gameScene::resume, moveTimer, [=](){moveTimer->start();});
-    connect(scene, &gameScene::resume, enemyBulletTick, [=](){enemyBulletTick->start();});
+    connect(scene, &gameScene::resume, tick, [=](){emit tick->start();});
+    connect(scene, &gameScene::resume, bulletTick, [=]()emit {bulletTick->start();});
+    connect(scene, &gameScene::resume, moveTimer, [=]()emit {moveTimer->start();});
+    connect(scene, &gameScene::resume, enemyBulletTick, [=](){emit enemyBulletTick->start();});
     connect(scene, &gameScene::shieldDown, this, &playcontroller::shieldCooldown);
     connect(scene, &gameScene::gameEnd, this, [=](){emit sceneRequest(viewSelector::mainMenu);});
-    //connect(this, &playcontroller::checkPlayerActions, scene, &gameScene::checkCollisions);
 }
 
 QGraphicsScene* playcontroller::getScene() const{return scene;}

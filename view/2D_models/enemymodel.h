@@ -29,7 +29,6 @@ signals:
     void itemMoved();
 
 public slots:
-    //void move();
     void changeSprite();
 };
 

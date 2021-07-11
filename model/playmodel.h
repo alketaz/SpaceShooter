@@ -17,7 +17,7 @@ private:
     unsigned int screen_w, screen_h;
 
 public:
-    playModel(unsigned int w =1920, unsigned int h =1080);
+    playModel(unsigned int w =1280, unsigned int h =720);
     void FirstWave();
     void SecondWave();
     void FinalWave();

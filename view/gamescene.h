@@ -62,6 +62,7 @@ signals:
     void stopBullets();
     void resume();
     void shieldDown();
+    void enemyOut();
 
 public slots:
     void move();

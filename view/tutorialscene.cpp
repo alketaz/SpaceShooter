@@ -118,7 +118,7 @@ void tutorialScene::loadButtons()
     connect(menu, &QPushButton::clicked, this, &tutorialScene::menuPressed);
 }
 
-tutorialScene::tutorialScene():
+tutorialScene::tutorialScene()
 {
     setSceneRect(0,0,1920,1080);
     loadBG();

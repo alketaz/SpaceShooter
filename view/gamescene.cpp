@@ -16,7 +16,7 @@ gameScene::gameScene(playModel* m): match(m), phase(gamePhase::base), enemyItems
     loadPlayer();
     loadWave();
     loadEnemies();
-    //connect(menuButton, &QGraphicsPixmapItem::clicked)
+    connect(this, &gameScene::enemyOut, this, &gameScene::changeState);
 }
 
 void gameScene::loadBG()
@@ -275,8 +275,13 @@ void gameScene::changeState(){
 }
 
 void gameScene::move(){
-    for(std::vector<enemyModel*>::iterator it = enemyItems.begin(); it!=enemyItems.end(); it++)
+    for(std::vector<enemyModel*>::iterator it = enemyItems.begin(); it!=enemyItems.end(); it++){
         (*it)->setPos((*it)->x(), (*it)->y()+16);
+        if((*it)->y() + (*it)->getHeight() > height()){
+            phase = gamePhase::lost;
+            emit enemyOut();
+        }
+    }
     for(std::vector<healthBar*>::iterator it = enemyHealth.begin(); it!=enemyHealth.end(); it++)
         (*it)->setPos((*it)->x(), (*it)->y()+16);
 }

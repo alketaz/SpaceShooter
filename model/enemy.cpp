@@ -9,3 +9,8 @@ void enemy::setRow(unsigned int i){row = i;}
 const unsigned int& enemy::getRow() const{return row;}
 
 enemy *enemy::clone() const {return new enemy(*this);}
+
+void enemy::updatePosition(int x, int y){
+    setX(getX() + x);
+    setY(getY() + (y ? y : 1));
+}

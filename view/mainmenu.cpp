@@ -11,7 +11,6 @@ mainmenu::mainmenu()
 
 void mainmenu::loadBackground(){
     QPixmap bg(":/img/game_bg.png");
-    //bg = bg.scaled(sceneRect().width(),sceneRect().height(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
     QBrush brush(bg);
     setBackgroundBrush(brush);
 }
@@ -73,5 +72,5 @@ void mainmenu::loadButtons() {
 
     connect(playbtn, &QPushButton::clicked, this, &mainmenu::onPlayPressed);
     connect(tutorialbtn, &QPushButton::clicked, this, &mainmenu::onTutorialPressed);
-    connect(exitbtn, &QPushButton::clicked, this, &QApplication::exit);    //ulteriore schermata per uscire
+    connect(exitbtn, &QPushButton::clicked, this, &QApplication::exit);
 }

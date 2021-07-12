@@ -27,10 +27,8 @@ public slots:
     void updateScene(viewSelector v);
 
 private:
-    /*Ui::MainWindow *ui;*/
     mainwindowview* view;
     controller* contr;
-    //model* model;
     void closeEvent(QCloseEvent *event) override;
 };
 #endif // MAINWINDOW_H

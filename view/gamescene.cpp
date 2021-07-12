@@ -1,6 +1,6 @@
 #include "gamescene.h"
 
-gameScene::gameScene(playModel* m): match(m), phase(gamePhase::final), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]){
+gameScene::gameScene(playModel* m): match(m), phase(gamePhase::base), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]){
     for(int i=0;i<5;i++)
         playerActions[i]=false;
     setSceneRect(0,0,1920,1080);
@@ -71,6 +71,8 @@ void gameScene::loadWave(){
         QGraphicsPixmapItem* subtitle = new QGraphicsPixmapItem(subtext);
         title->setPos(match->getScreenW()/2 - text.width()/2, 200);
         subtitle->setPos(match->getScreenW()/2 - subtext.width()/2, 300);
+        title->setZValue(1);
+        subtitle->setZValue(1);
         addItem(title);
         addItem(subtitle);
         connect(eTimer, &QTimer::timeout, this, &gameScene::gameEnd);
@@ -113,52 +115,38 @@ void gameScene::loadWave(){
 void gameScene::loadEnemies()
 {
     switch(phase){
-    case gamePhase::base:
-        match->FirstWave();
-        for(auto cit = match->getVettore().begin(); cit!=match->getVettore().end(); cit++){
-            enemyModel* eM = new enemyModel(enemyType::base);
-            healthBar* hB = new healthBar();
-            eM->setPos((*cit)->getX(), (*cit)->getY());
-            hB->setPos(eM->x() + eM->getWidth()/2 - 32, eM->y()-42);
-            enemyItems.push_back(eM);
-            enemyHealth.push_back(hB);
-            addItem(eM);
-            addItem(hB);
-        }
+        case gamePhase::base:
+            match->FirstWave();
         break;
-    case gamePhase::special:
-        match->SecondWave();
-        for(auto cit = match->getVettore().begin(); cit!=match->getVettore().end(); cit++){
-            enemyModel* eM;
-            if(dynamic_cast<const specialEnemy*>(cit->get())){
-                eM = new enemyModel(enemyType::special);
-            }
-            else
-                eM = new enemyModel(enemyType::base);
-            healthBar* hB = new healthBar();
-            eM->setPos((*cit)->getX(), (*cit)->getY());
-            hB->setPos(eM->x() + eM->getWidth()/2 - 32, eM->y()-42);
-            enemyItems.push_back(eM);
-            enemyHealth.push_back(hB);
-            addItem(eM);
-            addItem(hB);
-        }
+        case gamePhase::special:
+            match->SecondWave();
         break;
-    case gamePhase::final:
-        match->FinalWave();
-        enemyModel* eM = new enemyModel(enemyType::final);
-        eM->setPos((*match->getVettore().begin())->getX(), (*match->getVettore().begin())->getY());
+        case gamePhase::final:
+            match->FinalWave();
+        break;
+    }
+    for(auto cit = match->getVettore().begin(); cit!=match->getVettore().end(); cit++){
+        enemyModel* eM;
+        if(typeid (finalEnemy) == typeid (**cit))
+            eM = new enemyModel(enemyType::final);
+        else if(typeid (specialEnemy) == typeid (**cit))
+            eM = new enemyModel(enemyType::special);
+        else
+            eM = new enemyModel(enemyType::base);
         healthBar* hB = new healthBar();
-        healthBar* sB = new healthBar(true);
-        hB->setPos(eM->x() + eM->getWidth()/2 + 16, eM->y() - 52);
-        sB->setPos(eM->x() + eM->getWidth()/2 - 80, eM->y() - 52);
+        eM->setPos((*cit)->getX(), (*cit)->getY());
+        hB->setPos(eM->x() + eM->getWidth()/2 - 32, eM->y()-42);
+        if(typeid (finalEnemy) == typeid (**cit)){
+            healthBar* sB = new healthBar(true);
+            hB->setPos(eM->x() + eM->getWidth()/2 + 16, eM->y() - 52);
+            sB->setPos(eM->x() + eM->getWidth()/2 - 80, eM->y() - 52);
+            enemyHealth.push_back(sB);
+            addItem(sB);
+        }
         enemyItems.push_back(eM);
-        enemyHealth.push_back(sB);
         enemyHealth.push_back(hB);
         addItem(eM);
         addItem(hB);
-        addItem(sB);
-        break;
     }
 }
 
@@ -180,8 +168,9 @@ void gameScene::checkCollisions()
                 if(typeid(**m_it_copy) == typeid (specialEnemy) && static_cast<specialEnemy*>(m_it_copy->get())->divides()){
                     for(int i=0; i<2; i++){
                         enemy* e = new enemy();
-                        e->setX((*m_it_copy)->getX() + i*((*m_it_copy)->getSpaceshipWidth() - e->getSpaceshipWidth()));
-                        e->setY((*m_it_copy)->getY());
+                        int x = (*m_it_copy)->getX() + i*((*m_it_copy)->getSpaceshipWidth() - e->getSpaceshipWidth());
+                        int y = (*m_it_copy)->getY();
+                        e->updatePosition(x,y);
                         enemyModel* eM = new enemyModel(enemyType::mini);
                         eM->setPos(e->getX(), e->getY());
                         healthBar* hB = new healthBar();
@@ -229,8 +218,9 @@ void gameScene::checkCollisions()
             if(typeid(**m_it_copy) == typeid (specialEnemy) && static_cast<specialEnemy*>(m_it_copy->get())->divides()){
                 for(int i=0; i<2; i++){
                     enemy* e = new enemy();
-                    e->setX((*m_it_copy)->getX() + i*((*m_it_copy)->getSpaceshipWidth() - e->getSpaceshipWidth()));
-                    e->setY((*m_it_copy)->getY());
+                    int x = (*m_it_copy)->getX() + i*((*m_it_copy)->getSpaceshipWidth() - e->getSpaceshipWidth());
+                    int y = (*m_it_copy)->getY();
+                    e->updatePosition(x,y);
                     enemyModel* eM = new enemyModel(enemyType::mini);
                     eM->setPos(e->getX(), e->getY());
                     healthBar* hB = new healthBar();

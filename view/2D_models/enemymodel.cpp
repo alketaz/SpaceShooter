@@ -1,5 +1,4 @@
 #include "enemymodel.h"
-#include <QDebug>
 
 enemyModel::enemyModel(enemyType et): type(et), width(type==enemyType::final ? 512 : (type==enemyType::special ? 256 : 64)), height(type==enemyType::final ? 256 : (type==enemyType::special ? 128 : 64)), updateTimer(new QTimer()), hit(false)
 {

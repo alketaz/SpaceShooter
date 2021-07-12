@@ -10,9 +10,10 @@ private:
 public:
     enemy(unsigned int =4, unsigned int =1);
     enemy(const enemy&);
-    virtual void setRow(unsigned int);
-    virtual const unsigned int& getRow() const;
-    enemy* clone() const;
+    void setRow(unsigned int);
+    const unsigned int& getRow() const;
+    enemy* clone() const override;
+    void updatePosition(int =0, int =0) override;
 };
 
 #endif // ENEMY_H

@@ -1,22 +1,46 @@
 #include "gamescene.h"
 
-gameScene::gameScene(playModel* m): match(m), phase(gamePhase::final), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]), menuText(QPixmap(":/img/pause")), menuButton(QPixmap(":/img/menu"))
-{
+gameScene::gameScene(playModel* m): match(m), phase(gamePhase::final), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]){
     for(int i=0;i<5;i++)
         playerActions[i]=false;
     setSceneRect(0,0,1920,1080);
-    menuButton.setPos(width()/2-128, 400);
-    menuButton.setVisible(false);
-    addItem(&menuButton);
-    menuText.setPos(width()/2-394, 600);
-    menuText.setVisible(false);
-    addItem(&menuText);
     loadBG();
-    //loadMisc();
     loadPlayer();
     loadWave();
     loadEnemies();
+    loadPause();
     connect(this, &gameScene::enemyOut, this, &gameScene::changeState);
+}
+
+void gameScene::loadPause()
+{
+    bgrect = new QGraphicsRectItem(0,0,width(),height());
+    QColor black(0,0,0,100);
+    QBrush bg(black);
+    bgrect->setBrush(bg);
+    bgrect->setVisible(false);
+    addItem(bgrect);
+    menuText = new QGraphicsPixmapItem(QPixmap(":/img/pause"));
+    menuText->setPos(width()/2-394, 400);
+    menuText->setVisible(false);
+    addItem(menuText);
+
+    menuButton = new QPushButton("Torna al\nmenu");
+    menuButton->setGeometry(width()/2 - 90, 500, 180, 90);
+    menuButton->setStyleSheet("QPushButton {color: orange;"
+                          "font-size: 20px;"
+                          "font-weight: bold;"
+                          "background-color: rgba(0, 0, 0, 50);"
+                          "border: 5px solid orange;"
+                          "border-radius: 10px;"
+                          "outline: none;"
+                          "outline-radius: 10px;"
+                          "opacity: 0.9;}"
+                          "QPushButton:hover {"
+                          "background-color: rgba(150, 150, 150, 50);}");
+    addWidget(menuButton);
+    menuButton->setVisible(false);
+    connect(menuButton, &QPushButton::clicked, this, &gameScene::gameEnd);
 }
 
 void gameScene::loadBG()
@@ -330,8 +354,6 @@ int gameScene::movePlayerY(){
     return 0;
 }
 
-void gameScene::removeEnemy(unsigned int i){ std::vector<enemyModel*>::iterator it; enemyItems.erase(it+i); match->removeEnemy(i);}
-
 void gameScene::keyPressEvent(QKeyEvent* event){
     switch (event->key()){
     case Qt::Key_Left:
@@ -350,17 +372,15 @@ void gameScene::keyPressEvent(QKeyEvent* event){
         playerActions[4] = !playerActions[4];
         if(playerActions[4]){
             emit stopBullets();
-            menuButton.setVisible(true);
-            menuText.setVisible(true);
-            QBrush brush(QColor::fromRgbF(10,10,10,0.20));
-            setForegroundBrush(brush);
+            menuButton->setVisible(true);
+            menuText->setVisible(true);
+            bgrect->setVisible(true);
         }
         else{
             emit resume();
-            menuButton.setVisible(false);
-            menuText.setVisible(false);
-            QBrush brush(QColor::fromRgbF(10,10,10,0));
-            setForegroundBrush(brush);
+            menuButton->setVisible(false);
+            menuText->setVisible(false);
+            bgrect->setVisible(false);
         }
     break;
     }
@@ -385,14 +405,14 @@ void gameScene::keyReleaseEvent(QKeyEvent* event){
 
 void gameScene::updatePlayer(int w, int h){
     p->setPos(p->x()+ w, p->y() + h);
-    if(p->x() + static_cast<playerModel*>(p)->getWidth() > width())
-        p->setPos(width() - static_cast<playerModel*>(p)->getWidth(), p->y());
+    if(p->x() + (p)->getWidth() > width())
+        p->setPos(width() - (p)->getWidth(), p->y());
 
     if(p->x() < 0)
         p->setPos(0, p->y());
 
-    if(p->y() + static_cast<playerModel*>(p)->getHeight() + 14 > height())
-        p->setPos(p->x(), height()- static_cast<playerModel*>(p)->getHeight() - 14);
+    if(p->y() + (p)->getHeight() + 14 > height())
+        p->setPos(p->x(), height() - (p)->getHeight() - 14);
 
     if(p->y() < 0)
         p->setPos(p->x(), 0);
@@ -410,10 +430,3 @@ void gameScene::refillShield()
             (*hit)->restoreHealth();
 }
 
-/*void gameScene::pauseMenu()
-{
-    if(menu.isVisible())
-        menu.setVisible(false);
-    else
-        menu.setVisible(true);
-}*/

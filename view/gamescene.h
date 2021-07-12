@@ -3,6 +3,7 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
+#include <QPushButton>
 #include "model/deep_ptr.h"
 #include "model/gamephase.h"
 #include "model/playmodel.h"
@@ -29,8 +30,9 @@ private:
     healthBar* hp;
     bool* playerActions;
     //QGraphicsPixmapItem menuButton;
-    QGraphicsPixmapItem menuText;
-    QGraphicsPixmapItem menuButton;
+    QGraphicsRectItem* bgrect;
+    QGraphicsPixmapItem* menuText;
+    QPushButton* menuButton;
 
 public:
     gameScene(playModel*);
@@ -57,12 +59,15 @@ public:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
 
+    void loadPause();
+
 signals:
     void gameEnd();
     void stopBullets();
     void resume();
     void shieldDown();
     void enemyOut();
+    void menuPressed();
 
 public slots:
     void move();

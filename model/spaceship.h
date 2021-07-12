@@ -8,27 +8,29 @@ private:
     static unsigned int width, height;
     int hpLeft, x, y;
 
-public:
+protected:
+    void setX(int);
+    void setY(int);
+    void setDmg(unsigned int);
+    void setHP(int);
 
+public:
     spaceship(unsigned int, unsigned int);
     spaceship(const spaceship&);
     virtual ~spaceship() =default;
 
-    //metodi
-    virtual unsigned int& getSpaceshipWidth() const;
-    virtual unsigned int& getSpaceshipHeight() const;
-    void setX(int);
     const int& getX() const;
-    void setY(int);
     const int& getY() const;
     void decreaseHP(unsigned int);
     void setMaxHP(unsigned int);
     const unsigned int& getMaxHP() const;
-    void setHP(int);
     const int& getHP() const;
-    void setDmg(unsigned int);
-    unsigned int getDmg() const;
+    const unsigned int& getDmg() const;
+
+    virtual void updatePosition(int =0, int =0) =0;
     virtual spaceship* clone() const =0;
+    virtual unsigned int& getSpaceshipWidth() const;
+    virtual unsigned int& getSpaceshipHeight() const;
 };
 
 #endif // SPACESHIP_H

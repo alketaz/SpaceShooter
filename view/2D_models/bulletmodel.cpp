@@ -4,6 +4,7 @@ bulletModel::bulletModel(bool b): playerBullet(b), dmg(0)
 {
     setRect(0,0,4,16);
     setBrush(playerBullet ? Qt::red : (dmg == 1 ? Qt::green : (dmg==2 ? Qt::cyan : Qt::yellow)));
+
 }
 
 bulletModel::bulletModel(const bulletModel & b): QObject(), QGraphicsRectItem(), playerBullet(b.playerBullet), dmg(b.dmg)
@@ -12,7 +13,10 @@ bulletModel::bulletModel(const bulletModel & b): QObject(), QGraphicsRectItem(),
     setBrush(playerBullet ? Qt::red : (dmg == 1 ? Qt::green : (dmg==2 ? Qt::cyan : Qt::yellow)));
 }
 
-void bulletModel::setDmg(unsigned int i) {dmg = i;}
+void bulletModel::setDmg(unsigned int i) {
+    dmg = i;
+    setBrush(playerBullet ? Qt::red : (dmg == 1 ? Qt::green : (dmg==2 ? Qt::cyan : Qt::yellow)));
+}
 
 unsigned int bulletModel::getDmg() const {return dmg;}
 

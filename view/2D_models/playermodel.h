@@ -18,7 +18,6 @@ private:
 
 public:
     playerModel();
-    //void keyPressEvent(QKeyEvent* event);
     unsigned int getWidth() const;
     unsigned int getHeight() const;
     void setHit(bool);

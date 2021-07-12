@@ -14,9 +14,9 @@ public:
 
     void heal();
     void useSpecial();
-    //void addSpecial();
     unsigned int getSpecial() const;
-    player* clone() const;
+    player* clone() const override;
+    void updatePosition(int =0, int =0) override;
 };
 
 #endif // PLAYER_H

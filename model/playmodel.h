@@ -10,11 +10,10 @@
 
 class playModel: public QObject
 {
-//friend class gameScene;
 private:
     vettore<deep_ptr<spaceship>> enemies;
     deep_ptr<player> p;
-    static unsigned int screen_w, screen_h; //dimensioni rendering
+    static unsigned int screen_w, screen_h;
 
 public:
     playModel();

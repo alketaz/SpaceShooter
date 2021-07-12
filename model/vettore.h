@@ -2,12 +2,10 @@
 #define VETTORE_H
 #include "model/deep_ptr.h"
 #include <iostream>
-#include <QDebug>
 #include "enemy.h"
 
 template <class T>
 class vettore{
-    //friend class iterator;
 private:
     int cap;
     int sze;
@@ -21,8 +19,6 @@ public:
     vettore<T>& operator=(const vettore<T>&);
 
     class iterator{
-        //friend class const_iterator;
-        //friend class vettore;
     private:
         T* punt;
     public:
@@ -32,8 +28,8 @@ public:
         iterator& operator++();
         iterator operator--(int);
         iterator& operator--();
-        bool operator==(const iterator&) const; //missing
-        bool operator!=(const iterator&) const; //missing
+        bool operator==(const iterator&) const;
+        bool operator!=(const iterator&) const;
         T& operator*() const;
         T* operator->() const;
     };
@@ -48,8 +44,8 @@ public:
         const_iterator& operator++();
         const_iterator operator--(int);
         const_iterator& operator--();
-        bool operator==(const const_iterator&) const; //missing
-        bool operator!=(const const_iterator&) const; //missing
+        bool operator==(const const_iterator&) const;
+        bool operator!=(const const_iterator&) const;
         const T& operator*() const;
         const T* operator->() const;
     };
@@ -79,7 +75,6 @@ std::ostream& operator<<(std::ostream& os, const vettore<T>& v){
 
 #include "model/vettore.h"
 
-//costruttori
 template<class T>
 vettore<T>::vettore():cap(1), sze(0), info(new T[1]){}
 
@@ -111,7 +106,6 @@ vettore<T>& vettore<T>::operator=(const vettore<T>& v){
     return *this;
 }
 
-//iterator
 template<class T>
 vettore<T>::iterator::iterator(): punt(nullptr){}
 
@@ -154,7 +148,6 @@ T& vettore<T>::iterator::operator*() const{return *punt;}
 template<class T>
 T* vettore<T>::iterator::operator->() const{return punt;}
 
-//const_iterator
 template<class T>
 vettore<T>::const_iterator::const_iterator(const iterator& it): ite(it){}
 
@@ -200,7 +193,6 @@ const T& vettore<T>::const_iterator::operator*() const{return ite.operator*();}
 template<class T>
 const T* vettore<T>::const_iterator::operator->() const{return ite.operator->();}
 
-//metodi
 template<class T>
 int vettore<T>::size() const{return sze;}
 
@@ -247,9 +239,7 @@ void vettore<T>::push_back(const T& t){
 
 template<class T>
 void vettore<T>::pop_back(){
-    if(sze==0)
-        throw "exception";      //ATTENZIONE! SOSTITUIRE CON ECCEZIONE VERA
-    else{
+    if(sze>0){
         sze--;
         T* aux = new T[sze];
         for(int i=0;i<sze; i++)

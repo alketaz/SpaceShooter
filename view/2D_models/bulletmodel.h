@@ -20,7 +20,6 @@ public:
     void setDmg(unsigned int);
     unsigned int getDmg() const;
     bool getDir() const;
-    //enemyModel* gotHit();
 
 signals:
     void enemyHit();

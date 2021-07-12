@@ -23,6 +23,7 @@ public:
     unsigned int& getSpaceshipWidth() const;
     unsigned int& getSpaceshipHeight() const;
 
+    void updatePosition(int =0, int =0) override;
 };
 
 #endif // FINALENEMY_H

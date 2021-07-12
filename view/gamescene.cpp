@@ -380,9 +380,6 @@ void gameScene::keyReleaseEvent(QKeyEvent* event){
     case Qt::Key_Down:
         playerActions[3] = false;
     break;
-    case Qt::Key_Space:
-        playerActions[4] = false;
-    break;
     }
 }
 

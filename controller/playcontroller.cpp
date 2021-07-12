@@ -3,12 +3,12 @@
 playcontroller::playcontroller(): controller(), model(new playModel()), moveTimer(new QTimer()), tick(new QTimer()), bulletTick(new QTimer()), enemyBulletTick(new QTimer()), acceptRefill(true)
 {
     scene = new gameScene(model);
-    moveTimer->start(1200);
+    moveTimer->start(75);
     tick->start(30);
     bulletTick->start(750);
     enemyBulletTick->start(1000);
-    connect(moveTimer, &QTimer::timeout, scene, &gameScene::move);
     connect(moveTimer, &QTimer::timeout, model, &playModel::updateEnemyPosition);
+    connect(moveTimer, &QTimer::timeout, scene, &gameScene::move);
 
     connect(tick, &QTimer::timeout, this, &playcontroller::checkState);
     connect(tick, &QTimer::timeout, this, &playcontroller::checkPlayerActions);

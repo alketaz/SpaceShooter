@@ -48,8 +48,17 @@ void playModel::FinalWave()
 }
 
 void playModel::updateEnemyPosition(){
-    for(vettore<deep_ptr<spaceship>>::iterator it = enemies.begin(); it!=enemies.end();it++)
-        (*it)->setY((*it)->getY()+16);
+    for(vettore<deep_ptr<spaceship>>::iterator it = enemies.begin(); it!=enemies.end();it++){
+        if(typeid (finalEnemy) == typeid (**it)){
+            unsigned int r =rand()%5;
+            unsigned int step = rand()%4 +1;
+            (*it)->setX((*it)->getX() + ((r==2) ? 0 : (r<2 ? step : -step)));
+            if((*it)->getX()<0) (*it)->setX(0);
+            if((*it)->getX()>screen_w) (*it)->setX(screen_w);
+        }
+        (*it)->setY((*it)->getY()+1);
+    }
+
 }
 
 void playModel::healPlayer() {p->heal();}

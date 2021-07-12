@@ -1,6 +1,6 @@
 #include "gamescene.h"
 
-gameScene::gameScene(playModel* m): match(m), phase(gamePhase::base), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]), menuText(QPixmap(":/img/pause")), menuButton(QPixmap(":/img/menu"))
+gameScene::gameScene(playModel* m): match(m), phase(gamePhase::final), enemyItems(), enemyHealth(), p(new playerModel()), hp(new healthBar()), playerActions(new bool[5]), menuText(QPixmap(":/img/pause")), menuButton(QPixmap(":/img/menu"))
 {
     for(int i=0;i<5;i++)
         playerActions[i]=false;
@@ -275,15 +275,21 @@ void gameScene::changeState(){
 }
 
 void gameScene::move(){
-    for(std::vector<enemyModel*>::iterator it = enemyItems.begin(); it!=enemyItems.end(); it++){
-        (*it)->setPos((*it)->x(), (*it)->y()+16);
+    vettore<deep_ptr<spaceship>>::const_iterator cit = match->getVettore().begin();
+    std::vector<healthBar*>::iterator hit = enemyHealth.begin();
+    for(std::vector<enemyModel*>::iterator it = enemyItems.begin(); it!=enemyItems.end() && cit!=match->getVettore().end() && hit!=enemyHealth.end(); it++, cit++, hit++){
+        (*it)->setPos((*cit)->getX(), (*cit)->getY());
+        (*hit)->setPos((*hit)->x(), (*hit)->y() +1);
+        if(typeid (finalEnemy) == typeid (**cit)){
+            (*hit)->setPos((*it)->x() + (*it)->getWidth()/2 - 80, (*it)->y() - 52);
+            hit++;
+            (*hit)->setPos((*it)->x() + (*it)->getWidth()/2 + 16, (*it)->y() - 52);
+        }
         if((*it)->y() + (*it)->getHeight() > height()){
             phase = gamePhase::lost;
             emit enemyOut();
         }
     }
-    for(std::vector<healthBar*>::iterator it = enemyHealth.begin(); it!=enemyHealth.end(); it++)
-        (*it)->setPos((*it)->x(), (*it)->y()+16);
 }
 
 int gameScene::movePlayerX(){
@@ -297,9 +303,9 @@ int gameScene::movePlayerX(){
     if(p){
         int res =0;
         if(playerActions[0])
-            res-=8;
+            res-=12;
         if(playerActions[2])
-            res+=8;
+            res+=12;
         return res;
     }
     return 0;

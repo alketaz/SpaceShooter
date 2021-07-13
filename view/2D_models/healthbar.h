@@ -11,8 +11,10 @@ private:
     std::vector<QPixmap> progress;
     unsigned int spriteSel;
     void setSprite(unsigned int =0);
+
 public:
     healthBar(bool =false);
+
 public slots:
     void updateHealth(unsigned int);
     void restoreHealth();

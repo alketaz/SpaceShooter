@@ -25,9 +25,6 @@ public:
     unsigned int getHeight() const;
     enemyType getType() const;
 
-signals:
-    void itemMoved();
-
 public slots:
     void changeSprite();
 };

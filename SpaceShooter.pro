@@ -59,8 +59,7 @@ HEADERS += \
     view/tutorialscene.h \
     view/viewSelector.h
 
-FORMS += \
-    view/mainwindow.ui
+FORMS +=
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

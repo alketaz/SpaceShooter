@@ -84,6 +84,8 @@ void gameScene::loadWave(){
         title = new QGraphicsPixmapItem(text);
         QGraphicsPixmapItem* subtitle = new QGraphicsPixmapItem(subtext);
         title->setPos(match->getScreenW()/2 - text.width()/2, 200);
+        title->setZValue(1);
+        subtitle->setZValue(1);
         subtitle->setPos(match->getScreenW()/2 - subtext.width()/2, 300);
         addItem(title);
         addItem(subtitle);

@@ -4,7 +4,7 @@
 #include <QGraphicsRectItem>
 #include <QTimer>
 #include <QGraphicsScene>
-#include "view/2d_models/enemymodel.h"
+#include "view/2D_models/enemymodel.h"
 #include "view/gamescene.h"
 
 

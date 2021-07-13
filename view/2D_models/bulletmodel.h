@@ -21,9 +21,6 @@ public:
     unsigned int getDmg() const;
     bool getDir() const;
 
-signals:
-    void enemyHit();
-
 public slots:
     void move();
 };

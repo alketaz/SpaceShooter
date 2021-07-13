@@ -1,6 +1,5 @@
 #include "view/mainwindow.h"
 #include "view/mainwindowview.h"
-#include "ui_mainwindow.h"
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), view(new mainwindowview()), contr(new menucontroller())

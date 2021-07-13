@@ -13,14 +13,12 @@ SOURCES += \
     controller/menucontroller.cpp \
     controller/playcontroller.cpp \
     controller/tutorialcontroller.cpp \
-    model/deep_ptr.cpp \
     main.cpp \
     model/enemy.cpp \
     model/finalenemy.cpp \
     model/player.cpp \
     model/spaceship.cpp \
     model/specialenemy.cpp \
-    model/vettore.cpp \
     model/playmodel.cpp \
     view/2D_models/bulletmodel.cpp \
     view/2D_models/enemymodel.cpp \

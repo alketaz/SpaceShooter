@@ -7,7 +7,7 @@
 #include "model/deep_ptr.h"
 #include "model/gamephase.h"
 #include "model/playmodel.h"
-#include "model/enumClasses.h"
+#include "view/enumClasses.h"
 #include "view/2D_models/playermodel.h"
 #include "view/2D_models/enemymodel.h"
 #include "view/2D_models/bulletmodel.h"

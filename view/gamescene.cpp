@@ -126,6 +126,12 @@ void gameScene::loadEnemies()
         case gamePhase::final:
             match->FinalWave();
         break;
+        case gamePhase::won:
+            return;
+        break;
+        case gamePhase::lost:
+            return;
+        break;
     }
     for(auto cit = match->getVettore().begin(); cit!=match->getVettore().end(); cit++){
         enemyModel* eM;

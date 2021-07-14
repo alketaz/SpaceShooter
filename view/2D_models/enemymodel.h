@@ -3,7 +3,7 @@
 
 #include <QGraphicsPixmapItem>
 #include <QTimer>
-#include "model/enumClasses.h"
+#include "view/enumClasses.h"
 
 class enemyModel : public QObject, public QGraphicsPixmapItem
 {
